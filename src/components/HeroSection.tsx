@@ -412,11 +412,11 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-end justify-center overflow-hidden pb-32">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
-        style={{ background: 'linear-gradient(135deg, #000001 0%, #000005 50%, #000008 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)' }}
       />
       
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
@@ -425,11 +425,11 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-4xl md:text-6xl font-light text-white mb-6 tracking-tight font-playfair">
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-6 tracking-wide font-space">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto mb-6"></div>
-          <p className="text-lg md:text-xl text-slate-300 mb-8 font-light">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-6"></div>
+          <p className="text-base md:text-lg text-slate-300 mb-12 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
           
@@ -439,10 +439,10 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
-            <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium">
+            <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space">
               View My Work
             </button>
-            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium">
+            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium font-space">
               Get In Touch
             </button>
           </motion.div>
@@ -456,7 +456,7 @@ const HeroSection = () => {
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >
         <div className="flex flex-col items-center">
-          <span className="text-sm mb-2">Move mouse to interact • Scroll to explore</span>
+          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll to explore</span>
           <div className="w-px h-8 bg-gradient-to-b from-slate-400 to-transparent animate-pulse"></div>
         </div>
       </motion.div>
