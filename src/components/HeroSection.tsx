@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -424,11 +425,11 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-6xl md:text-8xl font-light text-white mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-light text-white mb-6 tracking-tight font-playfair">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-6"></div>
-          <p className="text-xl md:text-2xl text-slate-300 mb-8 font-light">
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-slate-300 to-transparent mx-auto mb-6"></div>
+          <p className="text-lg md:text-xl text-slate-300 mb-8 font-light">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
           
@@ -438,10 +439,10 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
-            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+            <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium">
               View My Work
             </button>
-            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-slate-800 hover:border-slate-300 transition-all duration-300">
+            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium">
               Get In Touch
             </button>
           </motion.div>
