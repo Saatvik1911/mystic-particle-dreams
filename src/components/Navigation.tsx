@@ -34,15 +34,8 @@ const Navigation = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-white"
-          >
-            AC
-          </motion.div>
-
-          {/* Desktop Navigation */}
+        <div className="flex justify-center items-center py-4 relative">
+          {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
               <motion.a
@@ -57,10 +50,18 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Logo - Positioned absolutely to left */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="absolute left-0 text-2xl font-bold text-white"
+          >
+            SA
+          </motion.div>
+
+          {/* Mobile Menu Button - Positioned absolutely to right */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden absolute right-0 text-white focus:outline-none"
           >
             <div className="space-y-1">
               <div className={`w-6 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
@@ -83,7 +84,7 @@ const Navigation = () => {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-slate-300 hover:text-white py-2 transition-colors duration-300"
+                className="block text-slate-300 hover:text-white py-2 transition-colors duration-300 text-center"
               >
                 {item.name}
               </a>

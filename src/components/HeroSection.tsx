@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -18,7 +17,7 @@ const HeroSection = () => {
     const mouse = new THREE.Vector2(10000, 10000);
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-    let cameraRotation = { x: 0.2, y: 0 };
+    let cameraRotation = { x: 0.1, y: 0 };
     let cameraDistance = 250;
 
     // Animation Settings
@@ -43,7 +42,7 @@ const HeroSection = () => {
       renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current!, antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000005, 0);
+      renderer.setClearColor(0x000001, 1);
 
       updateCameraPosition();
       createStarfield();
@@ -256,8 +255,8 @@ const HeroSection = () => {
       }
       updateShootingStars(deltaTime);
       
-      // Auto-rotate camera
-      cameraRotation.y += 0.001 * animationSettings.speed;
+      // Reduced auto-rotate camera
+      cameraRotation.y += 0.0002 * animationSettings.speed;
       updateCameraPosition();
       
       // Animate mist particles
@@ -327,16 +326,15 @@ const HeroSection = () => {
       }
       
       if (starfield) {
-        starfield.rotation.y += 0.0003;
-        starfield.rotation.x += 0.0001;
+        starfield.rotation.y += 0.0001;
+        starfield.rotation.x += 0.00005;
       }
       
       renderer.render(scene, camera);
     }
 
     function setupEventListeners() {
-      const canvas = canvasRef.current!;
-      
+      // Use window for mouse events to capture all mouse movement
       function onMouseMove(event: MouseEvent) {
         const vec = new THREE.Vector3(
           (event.clientX / window.innerWidth) * 2 - 1,
@@ -385,17 +383,17 @@ const HeroSection = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
-      canvas.addEventListener('mousemove', onMouseMove);
-      canvas.addEventListener('mousedown', onMouseDown);
-      canvas.addEventListener('mouseup', onMouseUp);
-      canvas.addEventListener('wheel', onWheel);
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mousedown', onMouseDown);
+      window.addEventListener('mouseup', onMouseUp);
+      window.addEventListener('wheel', onWheel);
       window.addEventListener('resize', onWindowResize);
 
       return () => {
-        canvas.removeEventListener('mousemove', onMouseMove);
-        canvas.removeEventListener('mousedown', onMouseDown);
-        canvas.removeEventListener('mouseup', onMouseUp);
-        canvas.removeEventListener('wheel', onWheel);
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mousedown', onMouseDown);
+        window.removeEventListener('mouseup', onMouseUp);
+        window.removeEventListener('wheel', onWheel);
         window.removeEventListener('resize', onWindowResize);
       };
     }
@@ -417,28 +415,28 @@ const HeroSection = () => {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
-        style={{ background: 'linear-gradient(135deg, #000005 0%, #1a1a2e 50%, #16213e 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #000001 0%, #000005 50%, #000008 100%)' }}
       />
       
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
           <h1 className="text-6xl md:text-8xl font-light text-white mb-6 tracking-tight">
-            Alex Chen
+            Saatvik Agrawal
           </h1>
           <div className="h-px w-32 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-6"></div>
           <p className="text-xl md:text-2xl text-slate-300 mb-8 font-light">
-            UX Designer crafting digital experiences that inspire and engage
+            Product Designer & Manager crafting user-centered digital experiences
           </p>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
             <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
               View My Work
@@ -454,7 +452,7 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >
         <div className="flex flex-col items-center">
           <span className="text-sm mb-2">Move mouse to interact • Scroll to explore</span>
