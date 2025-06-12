@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -412,7 +411,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-end justify-center overflow-hidden pb-32">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
@@ -429,7 +428,7 @@ const HeroSection = () => {
             Saatvik Agrawal
           </h1>
           <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-6"></div>
-          <p className="text-base md:text-lg text-slate-300 mb-12 font-light font-mono tracking-wider">
+          <p className="text-sm md:text-base text-slate-300 mb-12 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
           
