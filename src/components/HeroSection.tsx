@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -425,10 +424,10 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-medium text-white mb-2 tracking-wide font-space">
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-1 tracking-wide font-space">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-2"></div>
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-1"></div>
           <p className="text-xs md:text-sm text-slate-300 mb-8 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
@@ -439,7 +438,7 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
-        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto z-10"
+        className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto z-10"
       >
         <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space">
           View My Work
