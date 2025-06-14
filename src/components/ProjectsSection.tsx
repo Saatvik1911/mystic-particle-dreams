@@ -10,6 +10,11 @@ interface ProjectsSectionProps {
 const ProjectsSection = ({ isActive, onNavigateToHome }: ProjectsSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Watch for section changes - moved to top level
+  useEffect(() => {
+    console.log('ProjectsSection isActive changed:', isActive);
+  }, [isActive]);
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -44,16 +49,14 @@ const ProjectsSection = ({ isActive, onNavigateToHome }: ProjectsSectionProps) =
     let shootingStarTimer = 0;
     const shootingStarInterval = 8000;
 
-    // Watch for section changes
-    useEffect(() => {
-      if (isActive) {
-        targetCameraY = Math.PI / 2; // Face the nebula
-        isTransitioning = true;
-      } else {
-        targetCameraY = 0; // Face away
-        isTransitioning = true;
-      }
-    }, [isActive]);
+    // Handle section state changes
+    if (isActive) {
+      targetCameraY = Math.PI / 2; // Face the nebula
+      isTransitioning = true;
+    } else {
+      targetCameraY = 0; // Face away
+      isTransitioning = true;
+    }
 
     function init() {
       scene = new THREE.Scene();
