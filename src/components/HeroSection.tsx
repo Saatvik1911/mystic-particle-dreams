@@ -10,6 +10,21 @@ interface HeroSectionProps {
 const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Separate useEffect for section changes
+  useEffect(() => {
+    if (window.heroSectionRef && window.heroSectionRef.current) {
+      if (!isActive) {
+        // Transition camera to the right (90 degrees)
+        window.heroSectionRef.current.targetCameraY = Math.PI / 2;
+        window.heroSectionRef.current.isTransitioning = true;
+      } else {
+        // Return camera to center
+        window.heroSectionRef.current.targetCameraY = 0;
+        window.heroSectionRef.current.isTransitioning = true;
+      }
+    }
+  }, [isActive]);
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -29,6 +44,14 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
     let targetCameraY = 0;
     let isTransitioning = false;
 
+    // Store reference for external access
+    window.heroSectionRef = {
+      current: {
+        targetCameraY,
+        isTransitioning
+      }
+    };
+
     // Animation Settings
     const animationSettings = {
       speed: 1.0,
@@ -44,19 +67,6 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
 
     let shootingStarTimer = 0;
     const shootingStarInterval = 6000;
-
-    // Watch for section changes
-    useEffect(() => {
-      if (!isActive) {
-        // Transition camera to the right (90 degrees)
-        targetCameraY = Math.PI / 2;
-        isTransitioning = true;
-      } else {
-        // Return camera to center
-        targetCameraY = 0;
-        isTransitioning = true;
-      }
-    }, [isActive]);
 
     function init() {
       scene = new THREE.Scene();
@@ -269,21 +279,26 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
       const deltaTime = 16;
       animationSettings.time += 0.016;
       
-      // Handle camera transitions
-      if (isTransitioning) {
-        const transitionSpeed = 0.05;
-        const diff = targetCameraY - cameraRotation.y;
-        if (Math.abs(diff) > 0.01) {
-          cameraRotation.y += diff * transitionSpeed;
-        } else {
-          cameraRotation.y = targetCameraY;
-          isTransitioning = false;
+      // Handle camera transitions using global reference
+      if (window.heroSectionRef?.current) {
+        targetCameraY = window.heroSectionRef.current.targetCameraY;
+        isTransitioning = window.heroSectionRef.current.isTransitioning;
+        
+        if (isTransitioning) {
+          const transitionSpeed = 0.05;
+          const diff = targetCameraY - cameraRotation.y;
+          if (Math.abs(diff) > 0.01) {
+            cameraRotation.y += diff * transitionSpeed;
+          } else {
+            cameraRotation.y = targetCameraY;
+            window.heroSectionRef.current.isTransitioning = false;
+          }
+          updateCameraPosition();
+        } else if (isActive) {
+          // Only auto-rotate when active and not transitioning
+          cameraRotation.y += 0.0002 * animationSettings.speed;
+          updateCameraPosition();
         }
-        updateCameraPosition();
-      } else if (isActive) {
-        // Only auto-rotate when active and not transitioning
-        cameraRotation.y += 0.0002 * animationSettings.speed;
-        updateCameraPosition();
       }
       
       // Handle shooting stars
@@ -447,7 +462,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
         scene.clear();
       }
     };
-  }, [isActive]);
+  }, []);
 
   return (
     <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
