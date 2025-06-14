@@ -6,6 +6,26 @@ import * as THREE from 'three';
 const HeroSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const handleViewWorkClick = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start' 
+      });
+    }
+  };
+
+  const handleContactClick = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start' 
+      });
+    }
+  };
+
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -19,23 +39,24 @@ const HeroSection = () => {
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
     let cameraRotation = { x: 0.1, y: 0 };
-    let cameraDistance = 250;
+    let cameraDistance = 300;
 
-    // Animation Settings
+    // Enhanced Animation Settings with Dramatic Effects
     const animationSettings = {
       speed: 1.0,
-      interactionRadius: 150,
-      repelStrength: 2.5,
-      returnSpeed: 0.02,
+      interactionRadius: 180,
+      repelStrength: 3.0,
+      returnSpeed: 0.025,
       time: 0,
-      flowSpeed: 1.0,
-      flowAmplitude: 20,
-      noiseScale: 0.003,
-      mistOpacity: 0.4
+      flowSpeed: 0.8,
+      flowAmplitude: 25,
+      noiseScale: 0.002,
+      mistOpacity: 0.85,
+      particleDensity: 25
     };
 
     let shootingStarTimer = 0;
-    const shootingStarInterval = 6000;
+    const shootingStarInterval = 8000;
 
     function init() {
       scene = new THREE.Scene();
@@ -43,11 +64,11 @@ const HeroSection = () => {
       renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current!, antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000001, 1);
+      renderer.setClearColor(0x000005, 1);
 
       updateCameraPosition();
       createStarfield();
-      createMistSystem();
+      createNebulaSystem();
       createFlowParticles();
       setupEventListeners();
       animate();
@@ -57,7 +78,7 @@ const HeroSection = () => {
       const starGeometry = new THREE.BufferGeometry();
       const starPositions = [];
       const starColors = [];
-      const starCount = 4000;
+      const starCount = 6000;
       
       for (let i = 0; i < starCount; i++) {
         const x = THREE.MathUtils.randFloatSpread(2000);
@@ -66,8 +87,8 @@ const HeroSection = () => {
         starPositions.push(x, y, z);
         
         const color = new THREE.Color();
-        const brightness = 0.3 + Math.random() * 0.3;
-        color.setRGB(brightness * 0.9, brightness * 0.95, brightness);
+        const brightness = 0.3 + Math.random() * 0.4;
+        color.setRGB(brightness * 0.95, brightness * 0.9, brightness);
         starColors.push(color.r, color.g, color.b);
       }
       
@@ -75,7 +96,7 @@ const HeroSection = () => {
       starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
       
       const starMaterial = new THREE.PointsMaterial({ 
-        size: 1, 
+        size: 0.8, 
         vertexColors: true, 
         transparent: true, 
         opacity: 0.6, 
@@ -91,32 +112,32 @@ const HeroSection = () => {
       const positions = [];
       const colors = [];
       
-      const trailLength = 20;
+      const trailLength = 25;
       const startPos = new THREE.Vector3(
         (Math.random() - 0.5) * 2000,
-        (Math.random() - 0.5) * 2000,
+        (Math.random() - 0.5) * 1000,
         (Math.random() - 0.5) * 2000
       );
       
       const direction = new THREE.Vector3(
         (Math.random() - 0.5) * 2,
-        (Math.random() - 0.5) * 2,
+        (Math.random() - 0.5) * 1,
         (Math.random() - 0.5) * 2
       ).normalize();
       
       for (let i = 0; i < trailLength; i++) {
-        const pos = startPos.clone().add(direction.clone().multiplyScalar(i * -5));
+        const pos = startPos.clone().add(direction.clone().multiplyScalar(i * -6));
         positions.push(pos.x, pos.y, pos.z);
         
         const brightness = (trailLength - i) / trailLength;
-        colors.push(brightness * 0.9, brightness * 0.95, brightness);
+        colors.push(brightness * 0.95, brightness * 0.85, brightness);
       }
       
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
       geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
       
       const material = new THREE.PointsMaterial({
-        size: 3,
+        size: 4,
         vertexColors: true,
         transparent: true,
         opacity: 1,
@@ -126,8 +147,8 @@ const HeroSection = () => {
       const shootingStar = new THREE.Points(geometry, material);
       shootingStar.userData = {
         direction: direction,
-        speed: 5 + Math.random() * 5,
-        life: 3000,
+        speed: 6 + Math.random() * 4,
+        life: 4000,
         age: 0
       };
       
@@ -158,23 +179,19 @@ const HeroSection = () => {
       const flowGeometry = new THREE.BufferGeometry();
       const positions = [];
       const colors = [];
-      const flowCount = 300;
-      const radius = 120;
+      const flowCount = 400;
       
       for (let i = 0; i < flowCount; i++) {
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        const r = radius + (Math.random() - 0.5) * 40;
-        
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.sin(phi) * Math.sin(theta);
-        const z = r * Math.cos(phi);
+        const x = (Math.random() - 0.5) * 600;
+        const y = (Math.random() - 0.5) * 80;
+        const z = (Math.random() - 0.5) * 120;
         
         positions.push(x, y, z);
         
-        const brightness = 0.3 + Math.random() * 0.2;
+        const distanceFromCenter = Math.abs(x) / 300;
+        const brightness = (0.4 + Math.random() * 0.3) * (1 - distanceFromCenter * 0.5);
         const color = new THREE.Color();
-        color.setRGB(brightness * 0.9, brightness * 0.95, brightness);
+        color.setRGB(brightness * 0.95, brightness * 0.7, brightness);
         colors.push(color.r, color.g, color.b);
       }
       
@@ -183,51 +200,127 @@ const HeroSection = () => {
       flowGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
       
       const flowMaterial = new THREE.PointsMaterial({ 
-        size: 1, 
+        size: 1.2, 
         vertexColors: true, 
         blending: THREE.AdditiveBlending, 
         transparent: true, 
-        opacity: 0.2 
+        opacity: 0.4 
       });
       
       flowParticles = new THREE.Points(flowGeometry, flowMaterial);
       scene.add(flowParticles);
     }
 
-    function createMistSystem() {
+    function createNebulaSystem() {
+      if (mainParticles) {
+        scene.remove(mainParticles);
+        mainParticles.geometry.dispose();
+        mainParticles.material.dispose();
+      }
+      
       const geometry = new THREE.BufferGeometry();
       const positions = [];
       const colors = [];
-      const particleCount = 8000;
-      const radius = 80;
+      const sizes = [];
+      const particleCount = animationSettings.particleDensity * 4000;
       
       for (let i = 0; i < particleCount; i++) {
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        const r = radius * (0.3 + Math.random() * 0.7);
+        const u = Math.random() * Math.PI * 2;
+        const v = Math.random() * Math.PI;
+        const r = Math.random();
         
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.sin(phi) * Math.sin(theta);
-        const z = r * Math.cos(phi);
+        // Horizontal ellipsoid parameters
+        const a = 400; // Width
+        const b = 100; // Depth  
+        const c = 60;  // Height
+        
+        const radiusVariation = 0.7 + Math.random() * 0.6;
+        
+        const x = a * radiusVariation * Math.sin(v) * Math.cos(u) * r;
+        const y = c * radiusVariation * Math.sin(v) * Math.sin(u) * r;
+        const z = b * radiusVariation * Math.cos(v) * r;
         
         positions.push(x, y, z);
         
-        const brightness = 0.4 + Math.random() * 0.3;
+        // More dispersed color in center
+        const distanceFromCenter = Math.sqrt(x*x + y*y + z*z);
+        const maxDistance = Math.sqrt(a*a + b*b + c*c);
+        const distanceFactor = 1 - (distanceFromCenter / maxDistance);
+        
+        // Increased core radius for more dispersed purple (70% instead of 60%)
+        const coreRadius = Math.min(a, b, c) * 0.7;
+        const distanceFromCore = Math.sqrt(x*x + y*y + z*z);
+        const isInCore = distanceFromCore < coreRadius;
+        
+        const baseBrightness = 0.3 + Math.random() * 0.2;
+        const brightness = baseBrightness * (0.4 + distanceFactor * 0.6);
+        
         const color = new THREE.Color();
-        color.setRGB(brightness * 0.85, brightness * 0.9, brightness);
+        
+        if (isInCore) {
+          // More dispersed purple core with softer gradient
+          const coreIntensity = 1 - (distanceFromCore / coreRadius);
+          color.setRGB(
+            brightness * (0.5 + coreIntensity * 0.4),
+            brightness * (0.3 + coreIntensity * 0.3),
+            brightness * (0.6 + coreIntensity * 0.3)
+          );
+        } else {
+          // Grey particles with more subtle purple reflection
+          const coreInfluence = Math.max(0, 1 - (distanceFromCore - coreRadius) / (maxDistance - coreRadius));
+          const greyBase = brightness * 0.75;
+          color.setRGB(
+            greyBase + coreInfluence * brightness * 0.1,
+            greyBase + coreInfluence * brightness * 0.05,
+            greyBase + coreInfluence * brightness * 0.15
+          );
+        }
         colors.push(color.r, color.g, color.b);
+        
+        const size = 1.0 + Math.random() * 1.2 + distanceFactor * 0.8;
+        sizes.push(size);
       }
       
       initialPositions = new Float32Array(positions);
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(positions), 3));
       geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
       
-      const material = new THREE.PointsMaterial({ 
-        size: 1,
-        vertexColors: true, 
-        blending: THREE.AdditiveBlending, 
-        transparent: true, 
-        opacity: animationSettings.mistOpacity 
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          opacity: { value: animationSettings.mistOpacity }
+        },
+        vertexShader: `
+          attribute float size;
+          varying vec3 vColor;
+          varying float vSize;
+          
+          void main() {
+            vColor = color;
+            vSize = size;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+          }
+        `,
+        fragmentShader: `
+          uniform float opacity;
+          varying vec3 vColor;
+          varying float vSize;
+          
+          void main() {
+            float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
+            float alpha = 1.0 - smoothstep(0.0, 0.5, distanceToCenter);
+            alpha *= opacity;
+            
+            alpha *= (0.8 + 0.4 * exp(-distanceToCenter * 4.0));
+            
+            gl_FragColor = vec4(vColor, alpha);
+          }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        vertexColors: true
       });
       
       mainParticles = new THREE.Points(geometry, material);
@@ -256,23 +349,25 @@ const HeroSection = () => {
       }
       updateShootingStars(deltaTime);
       
-      // Reduced auto-rotate camera
-      cameraRotation.y += 0.0002 * animationSettings.speed;
+      // Limited auto-rotate camera
+      const rotationLimit = 0.174;
+      const oscillationSpeed = 0.0005;
+      cameraRotation.y = Math.sin(animationSettings.time * oscillationSpeed) * rotationLimit;
+      
       updateCameraPosition();
       
-      // Animate mist particles
+      // Animate nebula particles
       if (mainParticles) {
         const positions = mainParticles.geometry.attributes.position.array as Float32Array;
-        const colors = mainParticles.geometry.attributes.color.array as Float32Array;
         
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = initialPositions[i];
           const originalY = initialPositions[i + 1];
           const originalZ = initialPositions[i + 2];
           
-          const noiseX = Math.sin(animationSettings.time * animationSettings.flowSpeed + originalX * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.5;
-          const noiseY = Math.cos(animationSettings.time * animationSettings.flowSpeed + originalY * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.5;
-          const noiseZ = Math.sin(animationSettings.time * animationSettings.flowSpeed + originalZ * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.3;
+          const noiseX = Math.sin(animationSettings.time * animationSettings.flowSpeed + originalX * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.6;
+          const noiseY = Math.cos(animationSettings.time * animationSettings.flowSpeed + originalY * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.8;
+          const noiseZ = Math.sin(animationSettings.time * animationSettings.flowSpeed + originalZ * animationSettings.noiseScale) * animationSettings.flowAmplitude * 0.4;
           
           let targetX = originalX + noiseX;
           let targetY = originalY + noiseY;
@@ -282,60 +377,61 @@ const HeroSection = () => {
           if (distance < animationSettings.interactionRadius) {
             const force = (animationSettings.interactionRadius - distance) / animationSettings.interactionRadius;
             const angle = Math.atan2(targetY - mouse.y, targetX - mouse.x);
-            const pushDistance = force * animationSettings.repelStrength * 60;
+            const pushDistance = force * animationSettings.repelStrength * 80;
             targetX += Math.cos(angle) * pushDistance;
             targetY += Math.sin(angle) * pushDistance;
-            targetZ += (Math.random() - 0.5) * pushDistance * 0.5;
+            targetZ += (Math.random() - 0.5) * pushDistance * 0.6;
           }
           
           positions[i] += (targetX - positions[i]) * animationSettings.returnSpeed;
           positions[i + 1] += (targetY - positions[i + 1]) * animationSettings.returnSpeed;
           positions[i + 2] += (targetZ - positions[i + 2]) * animationSettings.returnSpeed;
-          
-          const colorIndex = Math.floor(i / 3) * 3;
-          const time = animationSettings.time * 0.3;
-          const brightness = 0.4 + Math.sin(time + originalX * 0.005) * 0.15;
-          colors[colorIndex] = brightness * 0.85;
-          colors[colorIndex + 1] = brightness * 0.9;
-          colors[colorIndex + 2] = brightness;
         }
         
         mainParticles.geometry.attributes.position.needsUpdate = true;
-        mainParticles.geometry.attributes.color.needsUpdate = true;
       }
       
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
+        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
         
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
           const originalZ = flowPositions[i + 2];
           
-          const time = animationSettings.time * animationSettings.flowSpeed * 0.5;
-          const flowX = Math.sin(time + originalX * 0.002) * animationSettings.flowAmplitude;
-          const flowY = Math.cos(time + originalY * 0.002) * animationSettings.flowAmplitude;
-          const flowZ = Math.sin(time + originalZ * 0.002) * animationSettings.flowAmplitude * 0.5;
+          const time = animationSettings.time * animationSettings.flowSpeed * 0.3;
+          const flowX = Math.sin(time + originalX * 0.001) * animationSettings.flowAmplitude * 1.2;
+          const flowY = Math.cos(time + originalY * 0.003) * animationSettings.flowAmplitude * 0.8;
+          const flowZ = Math.sin(time + originalZ * 0.002) * animationSettings.flowAmplitude * 0.6;
           
           positions[i] = originalX + flowX;
           positions[i + 1] = originalY + flowY;
           positions[i + 2] = originalZ + flowZ;
+          
+          const colorIndex = Math.floor(i / 3) * 3;
+          const distanceFromCenter = Math.abs(originalX) / 300;
+          const baseBrightness = 0.4 + Math.sin(time + originalX * 0.001) * 0.15;
+          const brightness = baseBrightness * (1 - distanceFromCenter * 0.5);
+          colors[colorIndex] = brightness * 0.95;
+          colors[colorIndex + 1] = brightness * 0.7;
+          colors[colorIndex + 2] = brightness;
         }
         
         flowParticles.geometry.attributes.position.needsUpdate = true;
+        flowParticles.geometry.attributes.color.needsUpdate = true;
       }
       
       if (starfield) {
-        starfield.rotation.y += 0.0001;
-        starfield.rotation.x += 0.00005;
+        starfield.rotation.y += 0.0003;
+        starfield.rotation.x += 0.0001;
       }
       
       renderer.render(scene, camera);
     }
 
     function setupEventListeners() {
-      // Use window for mouse events to capture all mouse movement
       function onMouseMove(event: MouseEvent) {
         const vec = new THREE.Vector3(
           (event.clientX / window.innerWidth) * 2 - 1,
@@ -354,8 +450,8 @@ const HeroSection = () => {
             x: event.clientX - previousMousePosition.x,
             y: event.clientY - previousMousePosition.y
           };
-          cameraRotation.y += deltaMove.x * 0.005;
-          cameraRotation.x += deltaMove.y * 0.005;
+          cameraRotation.y += deltaMove.x * 0.01;
+          cameraRotation.x += deltaMove.y * 0.01;
           cameraRotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, cameraRotation.x));
           updateCameraPosition();
           previousMousePosition = { x: event.clientX, y: event.clientY };
@@ -374,7 +470,7 @@ const HeroSection = () => {
       function onWheel(event: WheelEvent) {
         event.preventDefault();
         cameraDistance += event.deltaY * 0.1;
-        cameraDistance = Math.max(120, Math.min(400, cameraDistance));
+        cameraDistance = Math.max(150, Math.min(800, cameraDistance));
         updateCameraPosition();
       }
 
@@ -412,11 +508,11 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-end justify-center overflow-hidden pb-32">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
-        style={{ background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #000005 0%, #000008 50%, #00000a 100%)' }}
       />
       
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
@@ -425,11 +521,11 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-medium text-white mb-6 tracking-wide font-space">
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-4 tracking-wide font-space">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-6"></div>
-          <p className="text-base md:text-lg text-slate-300 mb-12 font-light font-mono tracking-wider">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-4"></div>
+          <p className="text-base md:text-lg text-slate-300 mb-8 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
           
@@ -437,12 +533,18 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto mb-12"
           >
-            <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space">
+            <button 
+              onClick={handleViewWorkClick}
+              className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
+            >
               View My Work
             </button>
-            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium font-space">
+            <button 
+              onClick={handleContactClick}
+              className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium font-space"
+            >
               Get In Touch
             </button>
           </motion.div>
