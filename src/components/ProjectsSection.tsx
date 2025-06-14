@@ -440,20 +440,12 @@ const ProjectsSection = () => {
                   >
                     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-purple-400/50 transition-all duration-300 h-full flex flex-col">
                       <div className="relative overflow-hidden h-64 bg-slate-700/30 flex items-center justify-center">
-                        {project.placeholder ? (
-                          <div className="text-slate-500 text-center">
-                            <div className="w-16 h-16 bg-slate-600/50 rounded-full mx-auto mb-4 flex items-center justify-center">
-                              <span className="text-2xl">📁</span>
-                            </div>
-                            <p className="text-sm">Cover Image</p>
+                        <div className="text-slate-500 text-center">
+                          <div className="w-16 h-16 bg-slate-600/50 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <span className="text-2xl">📁</span>
                           </div>
-                        ) : (
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                        )}
+                          <p className="text-sm">Cover Image</p>
+                        </div>
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
                       
