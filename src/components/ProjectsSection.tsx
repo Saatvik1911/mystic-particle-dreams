@@ -146,17 +146,17 @@ const ProjectsSection = () => {
         
         positions.push(x, y, z);
         
-        // Very dispersed color with much larger purple core
+        // Much more dispersed color with very gradual transition
         const distanceFromCenter = Math.sqrt(x*x + y*y + z*z);
         const maxDistance = Math.sqrt(a*a + b*b + c*c);
         const distanceFactor = 1 - (distanceFromCenter / maxDistance);
         
-        // Much larger core radius for very dispersed purple (90%)
-        const coreRadius = Math.min(a, b, c) * 0.9;
+        // Much larger and more dispersed core radius (95% of area)
+        const coreRadius = Math.min(a, b, c) * 0.95;
         const distanceFromCore = Math.sqrt(x*x + y*y + z*z);
         
-        // Use a much softer falloff function for the core
-        const coreInfluence = Math.max(0, 1 - Math.pow(distanceFromCore / coreRadius, 0.3));
+        // Use a very soft falloff function for extremely gradual transition
+        const coreInfluence = Math.max(0, 1 - Math.pow(distanceFromCore / coreRadius, 0.15));
         
         const baseBrightness = 0.25 + Math.random() * 0.15;
         const brightness = baseBrightness * (0.3 + distanceFactor * 0.7);
@@ -164,13 +164,13 @@ const ProjectsSection = () => {
         const color = new THREE.Color();
         
         // Create a much more gradual transition from purple to grey
-        const purpleIntensity = coreInfluence * 0.8;
-        const greyBase = brightness * (0.6 + purpleIntensity * 0.4);
+        const purpleIntensity = coreInfluence * 0.6;
+        const greyBase = brightness * (0.7 + purpleIntensity * 0.3);
         
         color.setRGB(
-          greyBase + purpleIntensity * brightness * 0.3,
-          greyBase + purpleIntensity * brightness * 0.15,
-          greyBase + purpleIntensity * brightness * 0.5
+          greyBase + purpleIntensity * brightness * 0.25,
+          greyBase + purpleIntensity * brightness * 0.1,
+          greyBase + purpleIntensity * brightness * 0.4
         );
         
         colors.push(color.r, color.g, color.b);
