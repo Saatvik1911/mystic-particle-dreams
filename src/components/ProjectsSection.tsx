@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -147,39 +146,33 @@ const ProjectsSection = () => {
         
         positions.push(x, y, z);
         
-        // Very dispersed color with larger purple core
+        // Very dispersed color with much larger purple core
         const distanceFromCenter = Math.sqrt(x*x + y*y + z*z);
         const maxDistance = Math.sqrt(a*a + b*b + c*c);
         const distanceFactor = 1 - (distanceFromCenter / maxDistance);
         
-        // Much larger core radius for very dispersed purple (80%)
-        const coreRadius = Math.min(a, b, c) * 0.8;
+        // Much larger core radius for very dispersed purple (90%)
+        const coreRadius = Math.min(a, b, c) * 0.9;
         const distanceFromCore = Math.sqrt(x*x + y*y + z*z);
-        const isInCore = distanceFromCore < coreRadius;
+        
+        // Use a much softer falloff function for the core
+        const coreInfluence = Math.max(0, 1 - Math.pow(distanceFromCore / coreRadius, 0.3));
         
         const baseBrightness = 0.25 + Math.random() * 0.15;
         const brightness = baseBrightness * (0.3 + distanceFactor * 0.7);
         
         const color = new THREE.Color();
         
-        if (isInCore) {
-          // Very soft purple gradient
-          const coreIntensity = 1 - (distanceFromCore / coreRadius);
-          color.setRGB(
-            brightness * (0.4 + coreIntensity * 0.3),
-            brightness * (0.25 + coreIntensity * 0.25),
-            brightness * (0.5 + coreIntensity * 0.25)
-          );
-        } else {
-          // Grey particles with very subtle purple tint
-          const coreInfluence = Math.max(0, 1 - (distanceFromCore - coreRadius) / (maxDistance - coreRadius));
-          const greyBase = brightness * 0.8;
-          color.setRGB(
-            greyBase + coreInfluence * brightness * 0.05,
-            greyBase + coreInfluence * brightness * 0.02,
-            greyBase + coreInfluence * brightness * 0.08
-          );
-        }
+        // Create a much more gradual transition from purple to grey
+        const purpleIntensity = coreInfluence * 0.8;
+        const greyBase = brightness * (0.6 + purpleIntensity * 0.4);
+        
+        color.setRGB(
+          greyBase + purpleIntensity * brightness * 0.3,
+          greyBase + purpleIntensity * brightness * 0.15,
+          greyBase + purpleIntensity * brightness * 0.5
+        );
+        
         colors.push(color.r, color.g, color.b);
         
         const size = 0.8 + Math.random() * 1.0 + distanceFactor * 0.6;
