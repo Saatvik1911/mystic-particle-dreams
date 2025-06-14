@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -521,7 +520,7 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section className="projects-section relative h-screen py-20 overflow-hidden">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden projects-section">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"

@@ -441,10 +441,7 @@ const HeroSection = () => {
             <button 
               className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
               onClick={() => {
-                document.querySelector('.projects-section')?.scrollIntoView({ 
-                  behavior: 'smooth',
-                  inline: 'start'
-                });
+                window.location.href = '/projects';
               }}
             >
               View My Work
