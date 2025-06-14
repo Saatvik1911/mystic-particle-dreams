@@ -2,7 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
-const ProjectsSection = () => {
+interface ProjectsSectionProps {
+  isActive: boolean;
+  onNavigateToHome: () => void;
+}
+
+const ProjectsSection = ({ isActive, onNavigateToHome }: ProjectsSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -13,14 +18,16 @@ const ProjectsSection = () => {
     let initialPositions: Float32Array, flowPositions: Float32Array;
     let shootingStars: THREE.Points[] = [];
 
-    // Mouse and Camera Controls
     const mouse = new THREE.Vector2(10000, 10000);
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
-    let cameraRotation = { x: 0.1, y: 0 };
+    let cameraRotation = { x: 0.1, y: Math.PI / 2 }; // Start rotated 90 degrees
     let cameraDistance = 300;
 
-    // Enhanced Animation Settings with Dramatic Effects
+    // Camera transition
+    let targetCameraY = Math.PI / 2;
+    let isTransitioning = false;
+
     const animationSettings = {
       speed: 1.0,
       interactionRadius: 180,
@@ -34,9 +41,19 @@ const ProjectsSection = () => {
       particleDensity: 25
     };
 
-    // Shooting stars
     let shootingStarTimer = 0;
     const shootingStarInterval = 8000;
+
+    // Watch for section changes
+    useEffect(() => {
+      if (isActive) {
+        targetCameraY = Math.PI / 2; // Face the nebula
+        isTransitioning = true;
+      } else {
+        targetCameraY = 0; // Face away
+        isTransitioning = true;
+      }
+    }, [isActive]);
 
     function init() {
       scene = new THREE.Scene();
@@ -487,7 +504,7 @@ const ProjectsSection = () => {
         scene.clear();
       }
     };
-  }, []);
+  }, [isActive]);
 
   const projects = [
     {
@@ -520,68 +537,66 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden projects-section">
+    <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
         style={{ background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)' }}
       />
       
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col">
         <motion.div
           initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 30 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-12 pt-24"
         >
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
             Selected Work
           </h2>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-4"></div>
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-6"></div>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
             Crafting digital experiences that solve real problems and delight users
           </p>
         </motion.div>
 
-        <div className="flex-1 overflow-y-auto">
-          <div className="grid grid-cols-1 gap-6">
+        <div className="flex-1 overflow-y-auto pb-24">
+          <div className="grid grid-cols-1 gap-8 max-w-5xl mx-auto">
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
+                animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 30 }}
+                transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
                 whileHover={{ x: -10 }}
                 className="group cursor-pointer"
               >
-                <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 flex">
-                  <div className="relative overflow-hidden w-1/3">
+                <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 flex flex-col md:flex-row">
+                  <div className="relative overflow-hidden md:w-2/5">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-64 md:h-72 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
                   </div>
                   
-                  <div className="p-6 flex-1">
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
+                  <div className="p-8 md:w-3/5 flex flex-col justify-center">
+                    <h3 className="text-2xl md:text-3xl font-semibold text-white mb-3 group-hover:text-purple-300 transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <p className="text-purple-400 text-sm font-medium mb-3">
+                    <p className="text-purple-400 text-base font-medium mb-4">
                       {project.subtitle}
                     </p>
-                    <p className="text-slate-400 mb-4 leading-relaxed text-sm">
+                    <p className="text-slate-400 mb-6 leading-relaxed text-base">
                       {project.description}
                     </p>
                     
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-3">
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-xs rounded-full"
+                          className="px-4 py-2 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-sm rounded-full border border-slate-600/30"
                         >
                           {tag}
                         </span>
@@ -595,21 +610,32 @@ const ProjectsSection = () => {
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mt-8"
+            animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-center mt-12"
           >
-            <button className="px-8 py-3 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
+            <button className="px-10 py-4 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm text-lg">
               View All Projects
             </button>
           </motion.div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 right-8 text-slate-400/70 text-sm z-20 pointer-events-none">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isActive ? 0.7 : 0 }}
+        transition={{ duration: 1 }}
+        className="absolute bottom-8 right-8 text-slate-400/70 text-sm z-20 pointer-events-none"
+      >
         Move mouse to interact • Drag to rotate • Scroll to zoom
-      </div>
+      </motion.div>
+
+      <button
+        onClick={onNavigateToHome}
+        className="absolute top-8 left-8 z-20 px-6 py-3 bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 text-slate-300 rounded-full hover:bg-slate-700/50 hover:text-white transition-all duration-300"
+      >
+        ← Back to Home
+      </button>
     </section>
   );
 };

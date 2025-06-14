@@ -1,13 +1,33 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
+import ProjectsSection from '../components/ProjectsSection';
 
 const Index = () => {
+  const [currentSection, setCurrentSection] = useState<'hero' | 'projects'>('hero');
+
+  const navigateToProjects = () => {
+    setCurrentSection('projects');
+  };
+
+  const navigateToHome = () => {
+    setCurrentSection('hero');
+  };
+
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <HeroSection />
+    <div className="min-h-screen relative overflow-hidden">
+      <Navigation currentSection={currentSection} onNavigate={{ navigateToHome, navigateToProjects }} />
+      <div className="relative w-full h-screen">
+        <HeroSection 
+          isActive={currentSection === 'hero'} 
+          onNavigateToProjects={navigateToProjects} 
+        />
+        <ProjectsSection 
+          isActive={currentSection === 'projects'} 
+          onNavigateToHome={navigateToHome} 
+        />
+      </div>
     </div>
   );
 };

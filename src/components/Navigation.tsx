@@ -2,7 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const Navigation = () => {
+interface NavigationProps {
+  currentSection: 'hero' | 'projects';
+  onNavigate: {
+    navigateToHome: () => void;
+    navigateToProjects: () => void;
+  };
+}
+
+const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,8 +24,8 @@ const Navigation = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Work', href: '/projects' },
+    { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
+    { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
     { name: 'About', href: '#about' },
     { name: 'Process', href: '#process' },
     { name: 'Contact', href: '#contact' }
@@ -39,22 +47,27 @@ const Navigation = () => {
           {/* Desktop Navigation - Centered */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              <motion.a
+              <motion.button
                 key={item.name}
-                href={item.href}
+                onClick={item.action || (() => {})}
                 whileHover={{ y: -2 }}
-                className="text-slate-300 hover:text-white transition-colors duration-300 relative group"
+                className={`transition-colors duration-300 relative group ${
+                  item.isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                }`}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-purple-400 transition-all duration-300 group-hover:w-full"></span>
-              </motion.a>
+                <span className={`absolute bottom-0 left-0 h-px bg-purple-400 transition-all duration-300 ${
+                  item.isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                }`}></span>
+              </motion.button>
             ))}
           </div>
 
           {/* Logo - Positioned absolutely to left */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="absolute left-0 text-2xl font-bold text-white"
+            className="absolute left-0 text-2xl font-bold text-white cursor-pointer"
+            onClick={onNavigate.navigateToHome}
           >
             SA
           </motion.div>
@@ -81,14 +94,18 @@ const Navigation = () => {
             className="md:hidden border-t border-slate-800 pt-4 pb-6"
           >
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-slate-300 hover:text-white py-2 transition-colors duration-300 text-center"
+                onClick={() => {
+                  if (item.action) item.action();
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`block py-2 transition-colors duration-300 text-center w-full ${
+                  item.isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                }`}
               >
                 {item.name}
-              </a>
+              </button>
             ))}
           </motion.div>
         )}

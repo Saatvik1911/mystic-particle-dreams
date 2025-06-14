@@ -2,7 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  isActive: boolean;
+  onNavigateToProjects: () => void;
+}
+
+const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -20,6 +25,10 @@ const HeroSection = () => {
     let cameraRotation = { x: 0.1, y: 0 };
     let cameraDistance = 250;
 
+    // Camera transition
+    let targetCameraY = 0;
+    let isTransitioning = false;
+
     // Animation Settings
     const animationSettings = {
       speed: 1.0,
@@ -35,6 +44,19 @@ const HeroSection = () => {
 
     let shootingStarTimer = 0;
     const shootingStarInterval = 6000;
+
+    // Watch for section changes
+    useEffect(() => {
+      if (!isActive) {
+        // Transition camera to the right (90 degrees)
+        targetCameraY = Math.PI / 2;
+        isTransitioning = true;
+      } else {
+        // Return camera to center
+        targetCameraY = 0;
+        isTransitioning = true;
+      }
+    }, [isActive]);
 
     function init() {
       scene = new THREE.Scene();
@@ -247,6 +269,23 @@ const HeroSection = () => {
       const deltaTime = 16;
       animationSettings.time += 0.016;
       
+      // Handle camera transitions
+      if (isTransitioning) {
+        const transitionSpeed = 0.05;
+        const diff = targetCameraY - cameraRotation.y;
+        if (Math.abs(diff) > 0.01) {
+          cameraRotation.y += diff * transitionSpeed;
+        } else {
+          cameraRotation.y = targetCameraY;
+          isTransitioning = false;
+        }
+        updateCameraPosition();
+      } else if (isActive) {
+        // Only auto-rotate when active and not transitioning
+        cameraRotation.y += 0.0002 * animationSettings.speed;
+        updateCameraPosition();
+      }
+      
       // Handle shooting stars
       shootingStarTimer += deltaTime;
       if (shootingStarTimer >= shootingStarInterval) {
@@ -408,10 +447,10 @@ const HeroSection = () => {
         scene.clear();
       }
     };
-  }, []);
+  }, [isActive]);
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
@@ -421,7 +460,7 @@ const HeroSection = () => {
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-medium text-white mb-6 tracking-wide font-space">
@@ -434,15 +473,13 @@ const HeroSection = () => {
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
             <button 
               className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
-              onClick={() => {
-                window.location.href = '/projects';
-              }}
+              onClick={onNavigateToProjects}
             >
               View My Work
             </button>
@@ -455,7 +492,7 @@ const HeroSection = () => {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: isActive ? 1 : 0 }}
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >
