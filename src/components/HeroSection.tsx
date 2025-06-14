@@ -47,8 +47,8 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
     // Store reference for external access
     window.heroSectionRef = {
       current: {
-        targetCameraY,
-        isTransitioning
+        targetCameraY: 0,
+        isTransitioning: false
       }
     };
 
@@ -281,8 +281,8 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
       
       // Handle camera transitions using global reference
       if (window.heroSectionRef?.current) {
-        targetCameraY = window.heroSectionRef.current.targetCameraY;
-        isTransitioning = window.heroSectionRef.current.isTransitioning;
+        const targetCameraY = window.heroSectionRef.current.targetCameraY;
+        const isTransitioning = window.heroSectionRef.current.isTransitioning;
         
         if (isTransitioning) {
           const transitionSpeed = 0.05;
