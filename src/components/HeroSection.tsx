@@ -411,7 +411,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
@@ -438,7 +438,15 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
           >
-            <button className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space">
+            <button 
+              className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
+              onClick={() => {
+                document.querySelector('.projects-section')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  inline: 'start'
+                });
+              }}
+            >
               View My Work
             </button>
             <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium font-space">
@@ -455,8 +463,8 @@ const HeroSection = () => {
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >
         <div className="flex flex-col items-center">
-          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll to explore</span>
-          <div className="w-px h-8 bg-gradient-to-b from-slate-400 to-transparent animate-pulse"></div>
+          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll horizontally to explore</span>
+          <div className="w-8 h-px bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse"></div>
         </div>
       </motion.div>
     </section>
