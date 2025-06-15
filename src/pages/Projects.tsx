@@ -20,7 +20,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-black overflow-hidden">
       <Navigation 
         currentSection="projects" 
         onNavigate={{ 
@@ -29,7 +29,7 @@ const Projects = () => {
           navigateToAbout: handleNavigateToAbout
         }} 
       />
-      <div className="w-full">
+      <div className="w-full h-screen flex items-center justify-center">
         <ProjectsSection />
       </div>
     </div>

@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import ProjectsSection from '../components/ProjectsSection';
-import Footer from '../components/Footer';
 
 const Index = () => {
   const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'about'>('hero');
@@ -14,7 +13,6 @@ const Index = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -99,9 +97,6 @@ const Index = () => {
         </div>
         <div id="projects" ref={projectsRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
           <ProjectsSection />
-        </div>
-        <div id="footer" ref={footerRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
-          <Footer />
         </div>
       </div>
     </div>
