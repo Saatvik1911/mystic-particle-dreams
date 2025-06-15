@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -451,7 +452,7 @@ const ProjectsSection = ({
     id: 1,
     title: "Eqo",
     subtitle: "Revolutionary location based social network",
-    description: "Revolutionizing Social Media: Tackling the paradox of experiencing digital connection while battling profound loneliness in the era of social media.",
+    description: "Revolutionizing Social Media: Tackling the paradox of digital connection while battling loneliness in social media.",
     image: "/lovable-uploads/844636d3-a0c8-407c-9745-b243f178a387.png",
     tags: ["UI", "UX", "Research", "Gamification", "Social Media"],
     color: "from-orange-500 to-pink-500"
@@ -459,7 +460,7 @@ const ProjectsSection = ({
     id: 2,
     title: "Safa-E",
     subtitle: "Bronze Winners Globally in SSDC 2022",
-    description: "Designing for a marginalized sector: The E-Rickshaw Drivers. An exhaustive service design rooted in shared value, meticulously crafted by studying stakeholder journeys, business considerations, and future trends.",
+    description: "Service design for E-Rickshaw Drivers. Exhaustive design rooted in shared value, studying stakeholder journeys and business trends.",
     image: "/lovable-uploads/fa90fb7e-7d9b-4095-8ad1-6fb1ca6e0080.png",
     tags: ["UI", "UX", "Service", "Research"],
     color: "from-blue-500 to-cyan-500"
@@ -467,7 +468,7 @@ const ProjectsSection = ({
     id: 3,
     title: "Annex",
     subtitle: "Smart collaboration platform",
-    description: "Smart collaboration platform for semi formal communications in a professional environment to boost work productivity.",
+    description: "Smart collaboration platform for semi-formal communications in professional environments to boost work productivity.",
     image: "/lovable-uploads/585acf27-0ab1-4a71-a343-ac5b8bf95d7e.png",
     tags: ["UI", "UX", "Design Sprint", "Research"],
     color: "from-green-500 to-teal-500"
@@ -504,30 +505,29 @@ const ProjectsSection = ({
             >
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 w-80 h-96 flex flex-col">
                 {/* Image section - consistent height for all cards */}
-                <div className="relative overflow-hidden h-48 flex-shrink-0">
+                <div className="relative overflow-hidden h-44 flex-shrink-0">
                   <img 
                     src={project.image} 
                     alt={project.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
                 </div>
                 
                 {/* Content section - flexible height */}
                 <div className="p-4 flex flex-col flex-grow">
-                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
+                  <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-purple-400 text-xs font-medium mb-3">
+                  <p className="text-purple-400 text-xs font-medium mb-2">
                     {project.subtitle}
                   </p>
-                  <p className="text-slate-400 mb-4 leading-relaxed text-xs flex-grow">
+                  <p className="text-slate-400 mb-3 leading-relaxed text-xs flex-grow">
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                  <div className="flex flex-wrap gap-1 mt-auto">
                     {project.tags.map(tag => (
-                      <span key={tag} className="px-2 py-1 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-xs rounded-full border border-slate-600/30">
+                      <span key={tag} className="px-2 py-0.5 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-xs rounded-full border border-slate-600/30">
                         {tag}
                       </span>
                     ))}
