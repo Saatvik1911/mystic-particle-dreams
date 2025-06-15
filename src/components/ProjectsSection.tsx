@@ -503,9 +503,9 @@ const ProjectsSection = ({
               whileHover={{ scale: 1.02 }}
               className="group cursor-pointer max-w-xs mx-auto"
             >
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col">
-                {/* Image section - increased height */}
-                <div className="relative overflow-hidden h-48">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col aspect-square">
+                {/* Image section - more square proportions */}
+                <div className="relative overflow-hidden flex-1">
                   <img 
                     src={project.image} 
                     alt={project.title} 
@@ -515,14 +515,14 @@ const ProjectsSection = ({
                 </div>
                 
                 {/* Content section */}
-                <div className="p-4 flex flex-col flex-grow">
+                <div className="p-4 flex flex-col flex-shrink-0">
                   <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-purple-400 text-xs font-medium mb-3">
                     {project.subtitle}
                   </p>
-                  <p className="text-slate-400 mb-4 leading-relaxed text-xs flex-grow">
+                  <p className="text-slate-400 mb-4 leading-relaxed text-xs">
                     {project.description}
                   </p>
                   
@@ -543,7 +543,7 @@ const ProjectsSection = ({
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }} 
           transition={{ duration: 0.8, delay: 0.6 }} 
-          className="text-center mt-20 mb-8"
+          className="text-center mt-16 mb-16"
         >
           <button className="px-4 py-2 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
             View All Projects
