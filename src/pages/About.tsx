@@ -1,19 +1,22 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import AboutSection from '../components/AboutSection';
 
 const About = () => {
+  const navigate = useNavigate();
+
   const handleNavigateToHome = () => {
-    window.location.href = '/';
+    navigate('/');
   };
 
   const handleNavigateToProjects = () => {
-    window.location.href = '/projects';
+    navigate('/projects');
   };
 
   const handleNavigateToAbout = () => {
-    window.location.href = '/about';
+    navigate('/about');
   };
 
   return (
