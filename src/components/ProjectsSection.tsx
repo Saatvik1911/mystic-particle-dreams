@@ -542,22 +542,13 @@ const ProjectsSection = ({
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }} 
           transition={{ duration: 0.8, delay: 0.6 }} 
-          className="text-center mt-20"
+          className="text-center mt-20 mb-8"
         >
-          <button className="px-6 py-3 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
+          <button className="px-4 py-2 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
             View All Projects
           </button>
         </motion.div>
       </div>
-
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: isActive ? 0.7 : 0 }} 
-        transition={{ duration: 1 }} 
-        className="absolute bottom-8 right-8 text-slate-400/70 text-sm z-20 pointer-events-none"
-      >
-        Move mouse to interact • Drag to rotate • Scroll to zoom
-      </motion.div>
     </section>
   );
 };
