@@ -33,18 +33,6 @@ const Index = () => {
   }, [location.search]);
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      setIsScrolled(container.scrollLeft > 50);
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
     const sections = [
       { id: 'hero', ref: heroRef },
       { id: 'projects', ref: projectsRef },
