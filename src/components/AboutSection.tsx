@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import AboutBackground from './AboutBackground';
 
 interface AboutSectionProps {
   isActive?: boolean;
@@ -13,19 +14,8 @@ const AboutSection = ({ isActive = true }: AboutSectionProps) => {
       transition={{ duration: 0.8 }}
       className="min-h-screen py-20 bg-black relative overflow-hidden"
     >
-      {/* Space background effects */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-20 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-32 left-16 w-1 h-1 bg-blue-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-60 left-1/3 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-        <div className="absolute bottom-48 right-20 w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
-        <div className="absolute top-32 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-60 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-        <div className="absolute top-80 right-16 w-1 h-1 bg-purple-200 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/3 w-2 h-2 bg-blue-200 rounded-full animate-pulse"></div>
-        <div className="absolute top-96 left-12 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-      </div>
+      {/* 3D Background Animation */}
+      <AboutBackground isActive={isActive} />
 
       <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <motion.div
