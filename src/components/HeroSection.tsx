@@ -1,3 +1,5 @@
+
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -486,22 +488,22 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
             Product Designer & Manager crafting user-centered digital experiences
           </p>
         </motion.div>
-      </div>
 
-      {/* Button positioned above instruction text */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-        transition={{ duration: 0.8, delay: 1 }}
-        className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-10 pointer-events-auto"
-      >
-        <button 
-          className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
-          onClick={onNavigateToProjects}
+        {/* Button now inside the same container as the text for proper alignment */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="pointer-events-auto"
         >
-          View My Work
-        </button>
-      </motion.div>
+          <button 
+            className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
+            onClick={onNavigateToProjects}
+          >
+            View My Work
+          </button>
+        </motion.div>
+      </div>
 
       {/* Instruction text centered at the bottom of the screen */}
       <motion.div
@@ -520,3 +522,4 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
 };
 
 export default HeroSection;
+
