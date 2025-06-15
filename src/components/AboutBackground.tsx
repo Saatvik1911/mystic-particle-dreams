@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
@@ -24,7 +23,7 @@ const AboutBackground = ({ isActive }: AboutBackgroundProps) => {
     };
     let cameraRotation = {
       x: 0.1,
-      y: isActive ? Math.PI / 2 : 0
+      y: 0
     };
     let cameraDistance = 300;
 
@@ -340,7 +339,7 @@ const AboutBackground = ({ isActive }: AboutBackgroundProps) => {
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
-        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
+        const colors = flowParticles.geometry.attributes.color.array as Float32BufferAttribute;
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
