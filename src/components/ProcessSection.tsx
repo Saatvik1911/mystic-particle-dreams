@@ -82,26 +82,6 @@ const ProcessSection = () => {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-8 border border-purple-500/30">
-            <h3 className="text-2xl font-semibold text-white mb-4">
-              Ready to start your project?
-            </h3>
-            <p className="text-slate-300 mb-6">
-              Let's work together to create something amazing that your users will love.
-            </p>
-            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
-              Let's Collaborate
-            </button>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

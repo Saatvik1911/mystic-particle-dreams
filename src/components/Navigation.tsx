@@ -26,9 +26,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    { name: 'About', href: '#about' },
-    { name: 'Process', href: '#process' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'About', href: '#about' }
   ];
 
   return (

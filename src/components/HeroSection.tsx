@@ -490,16 +490,13 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pointer-events-auto"
+            className="flex justify-center pointer-events-auto"
           >
             <button 
               className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
               onClick={onNavigateToProjects}
             >
               View My Work
-            </button>
-            <button className="px-8 py-3 border border-slate-400 text-slate-300 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 font-medium font-space">
-              Get In Touch
             </button>
           </motion.div>
         </motion.div>

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 border-t border-slate-800 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -28,7 +28,7 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {['Work', 'About', 'Process', 'Contact'].map((item) => (
+              {['Work', 'About'].map((item) => (
                 <li key={item}>
                   <a
                     href={`#${item.toLowerCase()}`}
@@ -39,24 +39,6 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <h4 className="text-lg font-semibold text-white mb-4">Let's Connect</h4>
-            <p className="text-slate-400 mb-4">
-              Ready to start your next project?
-            </p>
-            <a
-              href="#contact"
-              className="inline-block px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-300"
-            >
-              Get In Touch
-            </a>
           </motion.div>
         </div>
 
