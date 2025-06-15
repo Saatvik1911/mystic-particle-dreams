@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -496,7 +494,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
         transition={{ duration: 0.8, delay: 1 }}
         className="absolute z-10 flex justify-center pointer-events-auto"
-        style={{ top: 'calc(50% + 500px)', left: '50%', transform: 'translateX(-50%)' }}
+        style={{ top: '70%', left: '50%', transform: 'translateX(-50%)' }}
       >
         <button 
           className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
@@ -522,4 +520,3 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
 };
 
 export default HeroSection;
-
