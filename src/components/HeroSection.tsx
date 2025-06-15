@@ -480,30 +480,31 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-medium text-white mb-3 tracking-wide font-space">
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-2 tracking-wide font-space">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-4"></div>
-          <p className="text-xs md:text-sm text-slate-300 mb-12 font-light font-mono tracking-wider">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-3"></div>
+          <p className="text-xs md:text-xs text-slate-300 mb-12 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="flex justify-center pointer-events-auto"
-            style={{ marginTop: '500px' }}
-          >
-            <button 
-              className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
-              onClick={onNavigateToProjects}
-            >
-              View My Work
-            </button>
-          </motion.div>
         </motion.div>
       </div>
+
+      {/* Separate container for the button positioned independently */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute z-10 flex justify-center pointer-events-auto"
+        style={{ top: 'calc(50% + 500px)', left: '50%', transform: 'translateX(-50%)' }}
+      >
+        <button 
+          className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
+          onClick={onNavigateToProjects}
+        >
+          View My Work
+        </button>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}
