@@ -7,6 +7,7 @@ interface NavigationProps {
   onNavigate: {
     navigateToHome: () => void;
     navigateToProjects: () => void;
+    navigateToAbout?: () => void;
   };
 }
 
@@ -26,7 +27,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    { name: 'About', href: '#about', isActive: currentSection === 'about' }
+    { name: 'About', action: onNavigate.navigateToAbout || (() => {}), isActive: currentSection === 'about' }
   ];
 
   return (
