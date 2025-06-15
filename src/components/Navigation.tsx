@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface NavigationProps {
-  currentSection: 'hero' | 'projects';
+  currentSection: 'hero' | 'projects' | 'about';
   onNavigate: {
     navigateToHome: () => void;
     navigateToProjects: () => void;
@@ -26,7 +26,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    { name: 'About', href: '#about' }
+    { name: 'About', href: '#about', isActive: currentSection === 'about' }
   ];
 
   return (
