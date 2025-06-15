@@ -21,10 +21,7 @@ const Projects = () => {
           navigateToProjects: handleNavigateToProjects 
         }} 
       />
-      <ProjectsSection 
-        isActive={true} 
-        onNavigateToHome={handleNavigateToHome} 
-      />
+      <ProjectsSection />
     </div>
   );
 };

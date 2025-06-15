@@ -3,27 +3,11 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 interface HeroSectionProps {
-  isActive: boolean;
   onNavigateToProjects: () => void;
 }
 
-const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
+const HeroSection = ({ onNavigateToProjects }: HeroSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Separate useEffect for section changes
-  useEffect(() => {
-    if (window.heroSectionRef && window.heroSectionRef.current) {
-      if (!isActive) {
-        // Transition camera to the right (90 degrees)
-        window.heroSectionRef.current.targetCameraY = Math.PI / 2;
-        window.heroSectionRef.current.isTransitioning = true;
-      } else {
-        // Return camera to center
-        window.heroSectionRef.current.targetCameraY = 0;
-        window.heroSectionRef.current.isTransitioning = true;
-      }
-    }
-  }, [isActive]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -40,18 +24,10 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
     let cameraRotation = { x: 0.1, y: 0 };
     let cameraDistance = 250;
 
-    // Camera transition
-    let targetCameraY = 0;
-    let isTransitioning = false;
-
-    // Store reference for external access
-    window.heroSectionRef = {
-      current: {
-        targetCameraY: 0,
-        isTransitioning: false
-      }
-    };
-
+    // Camera transition is no longer needed
+    
+    // Remove window.heroSectionRef
+    
     // Animation Settings
     const animationSettings = {
       speed: 1.0,
@@ -279,27 +255,9 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
       const deltaTime = 16;
       animationSettings.time += 0.016;
       
-      // Handle camera transitions using global reference
-      if (window.heroSectionRef?.current) {
-        const targetCameraY = window.heroSectionRef.current.targetCameraY;
-        const isTransitioning = window.heroSectionRef.current.isTransitioning;
-        
-        if (isTransitioning) {
-          const transitionSpeed = 0.05;
-          const diff = targetCameraY - cameraRotation.y;
-          if (Math.abs(diff) > 0.01) {
-            cameraRotation.y += diff * transitionSpeed;
-          } else {
-            cameraRotation.y = targetCameraY;
-            window.heroSectionRef.current.isTransitioning = false;
-          }
-          updateCameraPosition();
-        } else if (isActive) {
-          // Only auto-rotate when active and not transitioning
-          cameraRotation.y += 0.0002 * animationSettings.speed;
-          updateCameraPosition();
-        }
-      }
+      // Simplified animation logic, removed camera transition
+      cameraRotation.y += 0.0002 * animationSettings.speed;
+      updateCameraPosition();
       
       // Handle shooting stars
       shootingStarTimer += deltaTime;
@@ -308,10 +266,6 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
         shootingStarTimer = 0;
       }
       updateShootingStars(deltaTime);
-      
-      // Reduced auto-rotate camera
-      cameraRotation.y += 0.0002 * animationSettings.speed;
-      updateCameraPosition();
       
       // Animate mist particles
       if (mainParticles) {
@@ -465,7 +419,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
   }, []);
 
   return (
-    <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0"
@@ -475,7 +429,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-medium text-white mb-2 tracking-wide font-space">
@@ -490,7 +444,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
         {/* Button now inside the same container as the text for proper alignment */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
           className="pointer-events-auto"
         >
@@ -506,7 +460,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
       {/* Instruction text centered at the bottom of the screen */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isActive ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >

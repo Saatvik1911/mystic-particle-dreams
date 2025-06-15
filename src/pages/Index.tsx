@@ -1,20 +1,55 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import ProjectsSection from '../components/ProjectsSection';
+import ProcessSection from '../components/ProcessSection';
+import Footer from '../components/Footer';
 
 const Index = () => {
-  const [currentSection, setCurrentSection] = useState<'hero' | 'projects'>('hero');
+  const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'process' | 'about'>('hero');
   const navigate = useNavigate();
 
-  const navigateToProjects = () => {
-    setCurrentSection('projects');
-  };
+  const heroRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+  const processRef = useRef<HTMLDivElement>(null);
 
-  const navigateToHome = () => {
-    setCurrentSection('hero');
+  useEffect(() => {
+    const sections = [
+      { id: 'hero', ref: heroRef },
+      { id: 'projects', ref: projectsRef },
+      { id: 'process', ref: processRef },
+    ];
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setCurrentSection(entry.target.id as any);
+          }
+        });
+      },
+      { rootMargin: '-50% 0px -50% 0px' }
+    );
+
+    sections.forEach(section => {
+      if (section.ref.current) {
+        observer.observe(section.ref.current);
+      }
+    });
+
+    return () => {
+      sections.forEach(section => {
+        if (section.ref.current) {
+          observer.unobserve(section.ref.current);
+        }
+      });
+    };
+  }, []);
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const navigateToAbout = () => {
@@ -22,25 +57,27 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="bg-background">
       <Navigation 
         currentSection={currentSection} 
         onNavigate={{ 
-          navigateToHome, 
-          navigateToProjects,
-          navigateToAbout 
+          navigateToHome: () => scrollToSection(heroRef), 
+          navigateToProjects: () => scrollToSection(projectsRef),
+          navigateToProcess: () => scrollToSection(processRef),
+          navigateToAbout
         }} 
       />
-      <div className="relative w-full h-screen">
-        <HeroSection 
-          isActive={currentSection === 'hero'} 
-          onNavigateToProjects={navigateToProjects} 
-        />
-        <ProjectsSection 
-          isActive={currentSection === 'projects'} 
-          onNavigateToHome={navigateToHome} 
-        />
+      
+      <div id="hero" ref={heroRef}>
+        <HeroSection onNavigateToProjects={() => scrollToSection(projectsRef)} />
       </div>
+      <div id="projects" ref={projectsRef}>
+        <ProjectsSection />
+      </div>
+      <div id="process" ref={processRef}>
+        <ProcessSection />
+      </div>
+      <Footer />
     </div>
   );
 };

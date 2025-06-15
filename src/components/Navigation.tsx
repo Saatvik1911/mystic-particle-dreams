@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 interface NavigationProps {
-  currentSection: 'hero' | 'projects' | 'about';
+  currentSection: 'hero' | 'projects' | 'process' | 'about';
   onNavigate: {
     navigateToHome: () => void;
     navigateToProjects: () => void;
+    navigateToProcess?: () => void;
     navigateToAbout?: () => void;
   };
 }
@@ -28,8 +29,10 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    { name: 'About', action: onNavigate.navigateToAbout || (() => {}), isActive: currentSection === 'about' }
-  ];
+    onNavigate.navigateToProcess && { name: 'Process', action: onNavigate.navigateToProcess, isActive: currentSection === 'process' },
+    onNavigate.navigateToAbout && { name: 'About', action: onNavigate.navigateToAbout, isActive: currentSection === 'about' }
+  ].filter(Boolean) as { name: string; action: () => void; isActive: boolean }[];
+
 
   const handleResumeClick = () => {
     // Open resume in new window/tab - user can replace with actual resume URL
@@ -54,7 +57,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
             {navItems.map((item) => (
               <motion.button
                 key={item.name}
-                onClick={item.action || (() => {})}
+                onClick={item.action}
                 whileHover={{ y: -2 }}
                 className={`transition-colors duration-300 relative group ${
                   item.isActive ? 'text-white' : 'text-slate-300 hover:text-white'
@@ -113,7 +116,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
               <button
                 key={item.name}
                 onClick={() => {
-                  if (item.action) item.action();
+                  item.action();
                   setIsMobileMenuOpen(false);
                 }}
                 className={`block py-2 transition-colors duration-300 text-center w-full ${
