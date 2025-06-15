@@ -479,12 +479,12 @@ const ProjectsSection = ({
         background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
       }} />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center pt-24">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
           transition={{ duration: 0.8 }} 
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
             Selected Work
@@ -492,7 +492,7 @@ const ProjectsSection = ({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 max-w-5xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -500,11 +500,11 @@ const ProjectsSection = ({
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
               whileHover={{ scale: 1.02 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer max-w-xs mx-auto"
             >
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col">
                 {/* Image section */}
-                <div className="relative overflow-hidden h-48">
+                <div className="relative overflow-hidden h-40">
                   <img 
                     src={project.image} 
                     alt={project.title} 
@@ -514,20 +514,20 @@ const ProjectsSection = ({
                 </div>
                 
                 {/* Content section */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl md:text-2xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
+                <div className="p-5 flex flex-col flex-grow">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-purple-400 text-sm font-medium mb-3">
+                  <p className="text-purple-400 text-xs font-medium mb-3">
                     {project.subtitle}
                   </p>
-                  <p className="text-slate-400 mb-4 leading-relaxed text-sm flex-grow">
+                  <p className="text-slate-400 mb-4 leading-relaxed text-xs flex-grow">
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-2 mt-auto">
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
                     {project.tags.map(tag => (
-                      <span key={tag} className="px-3 py-1 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-xs rounded-full border border-slate-600/30">
+                      <span key={tag} className="px-2 py-1 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-xs rounded-full border border-slate-600/30">
                         {tag}
                       </span>
                     ))}
@@ -542,7 +542,7 @@ const ProjectsSection = ({
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }} 
           transition={{ duration: 0.8, delay: 0.6 }} 
-          className="text-center mt-16"
+          className="text-center mt-20"
         >
           <button className="px-10 py-4 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm text-lg">
             View All Projects
