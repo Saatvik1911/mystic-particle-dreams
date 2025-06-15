@@ -480,7 +480,7 @@ const ProjectsSection = ({
         background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
       }} />
       
-      <div className="relative z-10 w-full h-full flex flex-col justify-center pt-32 px-6 sm:px-8 lg:px-12">
+      <div className="relative z-10 w-full h-full flex flex-col justify-center pt-32 px-12 lg:px-16">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
@@ -493,7 +493,7 @@ const ProjectsSection = ({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 justify-items-center">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -501,7 +501,7 @@ const ProjectsSection = ({
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
               whileHover={{ scale: 1.02 }}
-              className="group cursor-pointer mx-auto"
+              className="group cursor-pointer"
             >
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 w-80 h-96 flex flex-col">
                 {/* Image section - consistent height for all cards */}
