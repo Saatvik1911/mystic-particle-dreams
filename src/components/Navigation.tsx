@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 
 interface NavigationProps {
   currentSection: 'hero' | 'projects' | 'about';
@@ -29,6 +30,11 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
     { name: 'About', action: onNavigate.navigateToAbout || (() => {}), isActive: currentSection === 'about' }
   ];
+
+  const handleResumeClick = () => {
+    // Open resume in new window/tab - user can replace with actual resume URL
+    window.open('#', '_blank');
+  };
 
   return (
     <motion.nav
@@ -71,7 +77,18 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
             SA
           </motion.div>
 
-          {/* Mobile Menu Button - Positioned absolutely to right */}
+          {/* Resume Button - Positioned absolutely to right on desktop */}
+          <div className="absolute right-0 hidden md:block">
+            <Button
+              onClick={handleResumeClick}
+              variant="outline"
+              className="bg-transparent border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white transition-all duration-300"
+            >
+              Resume
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button - Positioned absolutely to right on mobile */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden absolute right-0 text-white focus:outline-none"
@@ -106,6 +123,19 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
                 {item.name}
               </button>
             ))}
+            {/* Resume button in mobile menu */}
+            <div className="pt-4">
+              <Button
+                onClick={() => {
+                  handleResumeClick();
+                  setIsMobileMenuOpen(false);
+                }}
+                variant="outline"
+                className="w-full bg-transparent border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white transition-all duration-300"
+              >
+                Resume
+              </Button>
+            </div>
           </motion.div>
         )}
       </div>
