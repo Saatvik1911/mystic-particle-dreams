@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -32,14 +31,15 @@ const ProjectsSection = ({
       x: 0,
       y: 0
     };
+    // Flipped camera rotation - start at -90 degrees (opposite side)
     let cameraRotation = {
       x: 0.1,
-      y: Math.PI / 2
-    }; // Start rotated 90 degrees
+      y: -Math.PI / 2
+    };
     let cameraDistance = 300;
 
     // Camera transition
-    let targetCameraY = Math.PI / 2;
+    let targetCameraY = -Math.PI / 2; // Flipped target
     let isTransitioning = false;
     const animationSettings = {
       speed: 1.0,
@@ -58,7 +58,7 @@ const ProjectsSection = ({
 
     // Handle section state changes
     if (isActive) {
-      targetCameraY = Math.PI / 2; // Face the nebula
+      targetCameraY = -Math.PI / 2; // Face the flipped nebula
       isTransitioning = true;
     } else {
       targetCameraY = 0; // Face away
@@ -310,10 +310,10 @@ const ProjectsSection = ({
       }
       updateShootingStars(deltaTime);
 
-      // Limited auto-rotate camera
+      // Limited auto-rotate camera - flipped direction
       const rotationLimit = 0.174;
       const oscillationSpeed = 0.0005;
-      cameraRotation.y = Math.sin(animationSettings.time * oscillationSpeed) * rotationLimit;
+      cameraRotation.y = -Math.PI / 2 + Math.sin(animationSettings.time * oscillationSpeed) * rotationLimit;
       updateCameraPosition();
 
       // Animate nebula particles
