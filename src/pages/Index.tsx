@@ -100,10 +100,10 @@ const Index = () => {
         <div id="hero" ref={heroRef} className="w-screen h-full flex-shrink-0 snap-start">
           <HeroSection onNavigateToProjects={() => scrollToSection(projectsRef)} />
         </div>
-        <div id="projects" ref={projectsRef} className="w-screen h-full flex-shrink-0 snap-start">
+        <div id="projects" ref={projectsRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
           <ProjectsSection />
         </div>
-        <div id="process" ref={processRef} className="w-screen h-full flex-shrink-0 snap-start">
+        <div id="process" ref={processRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center bg-slate-900">
           <ProcessSection />
         </div>
         <div id="footer" ref={footerRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
