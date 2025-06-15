@@ -503,9 +503,9 @@ const ProjectsSection = ({
               whileHover={{ scale: 1.02 }}
               className="group cursor-pointer max-w-xs mx-auto"
             >
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col aspect-square">
-                {/* Image section - more square proportions */}
-                <div className="relative overflow-hidden flex-1">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col w-80 h-96">
+                {/* Image section - fixed height for square-ish proportions */}
+                <div className="relative overflow-hidden h-48">
                   <img 
                     src={project.image} 
                     alt={project.title} 
@@ -514,15 +514,15 @@ const ProjectsSection = ({
                   <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
                 </div>
                 
-                {/* Content section */}
-                <div className="p-4 flex flex-col flex-shrink-0">
+                {/* Content section - flexible height */}
+                <div className="p-4 flex flex-col flex-grow">
                   <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-purple-400 text-xs font-medium mb-3">
                     {project.subtitle}
                   </p>
-                  <p className="text-slate-400 mb-4 leading-relaxed text-xs">
+                  <p className="text-slate-400 mb-4 leading-relaxed text-xs flex-grow">
                     {project.description}
                   </p>
                   
