@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -450,27 +449,27 @@ const ProjectsSection = ({
 
   const projects = [{
     id: 1,
-    title: "E-commerce Mobile App",
-    subtitle: "Redesigning the shopping experience",
-    description: "A complete mobile app redesign focusing on user journey optimization and conversion improvement.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
-    tags: ["Mobile Design", "UX Research", "Prototyping"],
-    color: "from-purple-500 to-pink-500"
+    title: "Eqo",
+    subtitle: "Revolutionary location based social network",
+    description: "Revolutionizing Social Media: Tackling the paradox of experiencing digital connection while battling profound loneliness in the era of social media.",
+    image: "/lovable-uploads/844636d3-a0c8-407c-9745-b243f178a387.png",
+    tags: ["UI", "UX", "Research", "Gamification", "Social Media"],
+    color: "from-orange-500 to-pink-500"
   }, {
     id: 2,
-    title: "SaaS Dashboard",
-    subtitle: "Data visualization and analytics",
-    description: "Designing an intuitive dashboard for complex data analysis with focus on usability and clarity.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-    tags: ["Dashboard Design", "Data Viz", "B2B"],
+    title: "Safa-E",
+    subtitle: "Bronze Winners Globally in SSDC 2022",
+    description: "Designing for a marginalized sector: The E-Rickshaw Drivers. An exhaustive service design rooted in shared value, meticulously crafted by studying stakeholder journeys, business considerations, and future trends.",
+    image: "/lovable-uploads/fa90fb7e-7d9b-4095-8ad1-6fb1ca6e0080.png",
+    tags: ["UI", "UX", "Service", "Research"],
     color: "from-blue-500 to-cyan-500"
   }, {
     id: 3,
-    title: "Healthcare Platform",
-    subtitle: "Connecting patients and doctors",
-    description: "A comprehensive telemedicine platform designed to improve accessibility and patient outcomes.",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=600&fit=crop",
-    tags: ["Healthcare", "Accessibility", "Web App"],
+    title: "Annex",
+    subtitle: "Smart collaboration platform",
+    description: "Smart collaboration platform for semi formal communications in a professional environment to boost work productivity.",
+    image: "/lovable-uploads/585acf27-0ab1-4a71-a343-ac5b8bf95d7e.png",
+    tags: ["UI", "UX", "Design Sprint", "Research"],
     color: "from-green-500 to-teal-500"
   }];
 
@@ -488,7 +487,7 @@ const ProjectsSection = ({
           className="text-center mb-24"
         >
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6 font-space">
-            Selected Work
+            Featured Projects
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
