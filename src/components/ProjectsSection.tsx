@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -486,7 +487,7 @@ const ProjectsSection = ({
           transition={{ duration: 0.8 }} 
           className="text-center mb-24"
         >
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-6 font-space">
             Selected Work
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
@@ -503,8 +504,8 @@ const ProjectsSection = ({
               className="group cursor-pointer max-w-xs mx-auto"
             >
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col">
-                {/* Image section */}
-                <div className="relative overflow-hidden h-32">
+                {/* Image section - increased height */}
+                <div className="relative overflow-hidden h-48">
                   <img 
                     src={project.image} 
                     alt={project.title} 
