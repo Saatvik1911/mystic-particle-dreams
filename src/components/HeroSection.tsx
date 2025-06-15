@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -486,23 +487,27 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
             Product Designer & Manager crafting user-centered digital experiences
           </p>
         </motion.div>
-
-        {/* Button moved 100 points below by changing top positioning */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="pointer-events-auto"
-          style={{ marginTop: '100px' }}
-        >
-          <button 
-            className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
-            onClick={onNavigateToProjects}
-          >
-            View My Work
-          </button>
-        </motion.div>
       </div>
+
+      {/* Button positioned absolutely to not affect text centering */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute z-10 pointer-events-auto"
+        style={{ 
+          left: '50%', 
+          transform: 'translateX(-50%)', 
+          top: 'calc(50% + 100px)' 
+        }}
+      >
+        <button 
+          className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
+          onClick={onNavigateToProjects}
+        >
+          View My Work
+        </button>
+      </motion.div>
 
       {/* Instruction text centered at the bottom of the screen */}
       <motion.div
