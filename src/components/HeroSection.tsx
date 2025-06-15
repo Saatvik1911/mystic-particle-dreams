@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -501,19 +502,20 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
             View My Work
           </button>
         </motion.div>
-      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isActive ? 1 : 0 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
-      >
-        <div className="flex flex-col items-center">
-          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll horizontally to explore</span>
-          <div className="w-8 h-px bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse"></div>
-        </div>
-      </motion.div>
+        {/* Instruction text centered relative to the main content */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isActive ? 1 : 0 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 pointer-events-none"
+        >
+          <div className="flex flex-col items-center">
+            <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll horizontally to explore</span>
+            <div className="w-8 h-px bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse"></div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
