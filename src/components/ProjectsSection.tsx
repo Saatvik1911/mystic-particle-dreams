@@ -480,7 +480,7 @@ const ProjectsSection = ({
         background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
       }} />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center pt-32">
+      <div className="relative z-10 w-full h-full flex flex-col justify-center pt-32 px-6 sm:px-8 lg:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
@@ -493,7 +493,7 @@ const ProjectsSection = ({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 max-w-7xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
