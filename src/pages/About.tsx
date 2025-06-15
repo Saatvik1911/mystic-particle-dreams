@@ -15,8 +15,12 @@ const About = () => {
     navigate('/projects');
   };
 
+  const handleNavigateToProcess = () => {
+    navigate('/?section=process');
+  };
+
   const handleNavigateToAbout = () => {
-    navigate('/about');
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -26,10 +30,13 @@ const About = () => {
         onNavigate={{ 
           navigateToHome: handleNavigateToHome, 
           navigateToProjects: handleNavigateToProjects,
+          navigateToProcess: handleNavigateToProcess,
           navigateToAbout: handleNavigateToAbout
         }} 
       />
-      <AboutSection isActive={true} />
+      <div className="pt-24 pb-12">
+        <AboutSection isActive={true} />
+      </div>
     </div>
   );
 };

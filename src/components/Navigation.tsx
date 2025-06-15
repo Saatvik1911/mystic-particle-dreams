@@ -1,11 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 interface NavigationProps {
   currentSection: 'hero' | 'projects' | 'process' | 'about';
-  isScrolled?: boolean;
   onNavigate: {
     navigateToHome: () => void;
     navigateToProjects: () => void;
@@ -14,22 +13,8 @@ interface NavigationProps {
   };
 }
 
-const Navigation = ({ currentSection, onNavigate, isScrolled: isScrolledProp }: NavigationProps) => {
-  const [isScrolledState, setIsScrolledState] = useState(false);
+const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (isScrolledProp !== undefined) return;
-
-    const handleScroll = () => {
-      setIsScrolledState(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isScrolledProp]);
-
-  const isScrolled = isScrolledProp !== undefined ? isScrolledProp : isScrolledState;
 
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },

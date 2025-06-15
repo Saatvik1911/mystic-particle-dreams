@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import ProjectsSection from '../components/ProjectsSection';
@@ -9,14 +8,29 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'process' | 'about'>('hero');
-  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const section = params.get('section');
+    if (!section) return;
+
+    let targetRef: React.RefObject<HTMLDivElement> | null = null;
+    if (section === 'hero') targetRef = heroRef;
+    if (section === 'projects') targetRef = projectsRef;
+    if (section === 'process') targetRef = processRef;
+
+    if (targetRef) {
+      setTimeout(() => scrollToSection(targetRef!), 100);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -83,7 +97,6 @@ const Index = () => {
     <div className="h-screen w-screen overflow-hidden bg-background">
       <Navigation 
         currentSection={currentSection} 
-        isScrolled={isScrolled}
         onNavigate={{ 
           navigateToHome: () => scrollToSection(heroRef), 
           navigateToProjects: () => scrollToSection(projectsRef),
