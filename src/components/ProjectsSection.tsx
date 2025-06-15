@@ -10,16 +10,19 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    // No need to log isActive anymore
-  }, []);
+    let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
+    let mainParticles: THREE.Points, starfield: THREE.Points, flowParticles: THREE.Points;
+    let initialPositions: Float32Array, flowPositions: Float32Array;
+    let shootingStars: THREE.Points[] = [];
+    const mouse = new THREE.Vector2(10000, 10000);
 
-  useEffect(() => {
     let isDragging = false;
     let previousMousePosition = {
       x: 0,
       y: 0
     };
     let cameraDistance = 300;
+    let cameraRotation = { x: 0, y: 0 };
 
     // Camera transition logic removed
     const animationSettings = {
@@ -38,13 +41,6 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
     const shootingStarInterval = 8000;
 
     function init() {
-      let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
-      let mainParticles: THREE.Points, starfield: THREE.Points, flowParticles: THREE.Points;
-      let initialPositions: Float32Array, flowPositions: Float32Array;
-      let shootingStars: THREE.Points[] = [];
-      const mouse = new THREE.Vector2(10000, 10000);
-      let isTransitioning = false;
-
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
       renderer = new THREE.WebGLRenderer({
@@ -327,7 +323,7 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
-        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
+        const colors = flowParticles.geometry.attributes.color.array as Float32BufferAttribute;
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
