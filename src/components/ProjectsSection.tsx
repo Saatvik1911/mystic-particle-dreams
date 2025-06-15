@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -323,7 +324,7 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
-        const colors = flowParticles.geometry.attributes.color.array as Float32BufferAttribute;
+        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
