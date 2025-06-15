@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -513,7 +511,7 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-slate-400 z-10 pointer-events-none"
       >
         <div className="flex flex-col items-center">
-          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll horizontally to explore</span>
+          <span className="text-sm mb-2 font-mono">Move mouse to interact • Scroll to explore</span>
           <div className="w-8 h-px bg-gradient-to-r from-transparent via-slate-400 to-transparent animate-pulse"></div>
         </div>
       </motion.div>
@@ -522,4 +520,3 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
 };
 
 export default HeroSection;
-
