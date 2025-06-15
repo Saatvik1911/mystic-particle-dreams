@@ -9,11 +9,26 @@ import Footer from '../components/Footer';
 
 const Index = () => {
   const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'process' | 'about'>('hero');
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const processRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      setIsScrolled(container.scrollLeft > 50);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const sections = [
@@ -22,6 +37,9 @@ const Index = () => {
       { id: 'process', ref: processRef },
     ];
     
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -30,7 +48,7 @@ const Index = () => {
           }
         });
       },
-      { rootMargin: '-50% 0px -50% 0px' }
+      { root: container, threshold: 0.5 }
     );
 
     sections.forEach(section => {
@@ -49,7 +67,12 @@ const Index = () => {
   }, []);
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (ref.current && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        left: ref.current.offsetLeft,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const navigateToAbout = () => {
@@ -57,9 +80,10 @@ const Index = () => {
   };
 
   return (
-    <div className="bg-background">
+    <div className="h-screen w-screen overflow-hidden bg-background">
       <Navigation 
         currentSection={currentSection} 
+        isScrolled={isScrolled}
         onNavigate={{ 
           navigateToHome: () => scrollToSection(heroRef), 
           navigateToProjects: () => scrollToSection(projectsRef),
@@ -68,16 +92,24 @@ const Index = () => {
         }} 
       />
       
-      <div id="hero" ref={heroRef}>
-        <HeroSection onNavigateToProjects={() => scrollToSection(projectsRef)} />
+      <div 
+        ref={scrollContainerRef} 
+        className="flex w-full h-full overflow-x-auto snap-x snap-mandatory no-scrollbar"
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        <div id="hero" ref={heroRef} className="w-screen h-full flex-shrink-0 snap-start">
+          <HeroSection onNavigateToProjects={() => scrollToSection(projectsRef)} />
+        </div>
+        <div id="projects" ref={projectsRef} className="w-screen h-full flex-shrink-0 snap-start">
+          <ProjectsSection />
+        </div>
+        <div id="process" ref={processRef} className="w-screen h-full flex-shrink-0 snap-start">
+          <ProcessSection />
+        </div>
+        <div id="footer" ref={footerRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
+          <Footer />
+        </div>
       </div>
-      <div id="projects" ref={projectsRef}>
-        <ProjectsSection />
-      </div>
-      <div id="process" ref={processRef}>
-        <ProcessSection />
-      </div>
-      <Footer />
     </div>
   );
 };
