@@ -335,7 +335,7 @@ const ProjectsSection = ({
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
-        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
+        const colors = flowParticles.geometry.attributes.color.array as Float32BufferAttribute;
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
@@ -457,49 +457,49 @@ const ProjectsSection = ({
     tags: ["Healthcare", "Accessibility", "Web App"],
     color: "from-green-500 to-teal-500"
   }];
-  return <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+  return (
+    <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
       <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{
-      background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
-    }} />
+        background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
+      }} />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col">
-        <motion.div initial={{
-        opacity: 0,
-        x: 30
-      }} animate={{
-        opacity: isActive ? 1 : 0,
-        x: isActive ? 0 : 30
-      }} transition={{
-        duration: 0.8
-      }} className="text-center mb-12 pt-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
+          transition={{ duration: 0.8 }} 
+          className="text-center mb-16"
+        >
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
             Selected Work
           </h2>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mb-6"></div>
-          
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="flex-1 overflow-y-auto pb-24">
-          <div className="grid grid-cols-1 gap-8 max-w-5xl mx-auto">
-            {projects.map((project, index) => <motion.div key={project.id} initial={{
-            opacity: 0,
-            x: 30
-          }} animate={{
-            opacity: isActive ? 1 : 0,
-            x: isActive ? 0 : 30
-          }} transition={{
-            duration: 0.8,
-            delay: isActive ? index * 0.2 : 0
-          }} whileHover={{
-            x: -10
-          }} className="group cursor-pointer">
-                <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 flex flex-col md:flex-row">
-                  <div className="relative overflow-hidden md:w-2/5">
-                    <img src={project.image} alt={project.title} className="w-full h-64 md:h-72 object-cover group-hover:scale-110 transition-transform duration-500" />
+        <div className="space-y-8">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 30 }}
+              transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
+              whileHover={{ scale: 1.02 }}
+              className="group cursor-pointer"
+            >
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300">
+                <div className="grid grid-cols-2 h-80">
+                  {/* Left half - Image */}
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                    />
                     <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}></div>
                   </div>
                   
-                  <div className="p-8 md:w-3/5 flex flex-col justify-center">
+                  {/* Right half - Content */}
+                  <div className="p-8 flex flex-col justify-center">
                     <h3 className="text-2xl md:text-3xl font-semibold text-white mb-3 group-hover:text-purple-300 transition-colors duration-300">
                       {project.title}
                     </h3>
@@ -511,43 +511,40 @@ const ProjectsSection = ({
                     </p>
                     
                     <div className="flex flex-wrap gap-3">
-                      {project.tags.map(tag => <span key={tag} className="px-4 py-2 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-sm rounded-full border border-slate-600/30">
+                      {project.tags.map(tag => (
+                        <span key={tag} className="px-4 py-2 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-sm rounded-full border border-slate-600/30">
                           {tag}
-                        </span>)}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </motion.div>)}
-          </div>
-
-          <motion.div initial={{
-          opacity: 0,
-          x: 20
-        }} animate={{
-          opacity: isActive ? 1 : 0,
-          x: isActive ? 0 : 20
-        }} transition={{
-          duration: 0.8,
-          delay: 0.6
-        }} className="text-center mt-12">
-            <button className="px-10 py-4 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm text-lg">
-              View All Projects
-            </button>
-          </motion.div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }} 
+          transition={{ duration: 0.8, delay: 0.6 }} 
+          className="text-center mt-16"
+        >
+          <button className="px-10 py-4 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm text-lg">
+            View All Projects
+          </button>
+        </motion.div>
       </div>
 
-      <motion.div initial={{
-      opacity: 0
-    }} animate={{
-      opacity: isActive ? 0.7 : 0
-    }} transition={{
-      duration: 1
-    }} className="absolute bottom-8 right-8 text-slate-400/70 text-sm z-20 pointer-events-none">
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: isActive ? 0.7 : 0 }} 
+        transition={{ duration: 1 }} 
+        className="absolute bottom-8 right-8 text-slate-400/70 text-sm z-20 pointer-events-none"
+      >
         Move mouse to interact • Drag to rotate • Scroll to zoom
       </motion.div>
-
-      
-    </section>;
+    </section>
+  );
 };
 export default ProjectsSection;
