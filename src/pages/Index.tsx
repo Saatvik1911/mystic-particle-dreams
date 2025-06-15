@@ -76,13 +76,17 @@ const Index = () => {
     navigate('/about');
   };
 
+  const navigateToProjects = () => {
+    navigate('/projects');
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden bg-background">
       <Navigation 
         currentSection={currentSection} 
         onNavigate={{ 
           navigateToHome: () => scrollToSection(heroRef), 
-          navigateToProjects: () => scrollToSection(projectsRef),
+          navigateToProjects: navigateToProjects,
           navigateToAbout
         }} 
       />
