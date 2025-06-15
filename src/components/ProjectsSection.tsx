@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -544,7 +545,7 @@ const ProjectsSection = ({
           transition={{ duration: 0.8, delay: 0.6 }} 
           className="text-center mt-20"
         >
-          <button className="px-10 py-4 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm text-lg">
+          <button className="px-6 py-3 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
             View All Projects
           </button>
         </motion.div>
