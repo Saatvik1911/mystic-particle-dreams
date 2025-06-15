@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -478,11 +479,11 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-medium text-white mb-6 tracking-wide font-space">
+          <h1 className="text-4xl md:text-5xl font-medium text-white mb-3 tracking-wide font-space">
             Saatvik Agrawal
           </h1>
-          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-6"></div>
-          <p className="text-sm md:text-base text-slate-300 mb-12 font-light font-mono tracking-wider">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-4"></div>
+          <p className="text-xs md:text-sm text-slate-300 mb-12 font-light font-mono tracking-wider">
             Product Designer & Manager crafting user-centered digital experiences
           </p>
           
