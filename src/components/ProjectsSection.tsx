@@ -4,28 +4,43 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 interface ProjectsSectionProps {
-  // No props needed now
+  isActive: boolean;
+  onNavigateToHome: () => void;
 }
 
-const ProjectsSection = ({}: ProjectsSectionProps) => {
+const ProjectsSection = ({
+  isActive,
+  onNavigateToHome
+}: ProjectsSectionProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // Watch for section changes - moved to top level
   useEffect(() => {
+    console.log('ProjectsSection isActive changed:', isActive);
+  }, [isActive]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
     let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
     let mainParticles: THREE.Points, starfield: THREE.Points, flowParticles: THREE.Points;
     let initialPositions: Float32Array, flowPositions: Float32Array;
     let shootingStars: THREE.Points[] = [];
     const mouse = new THREE.Vector2(10000, 10000);
-
     let isDragging = false;
     let previousMousePosition = {
       x: 0,
       y: 0
     };
+    let cameraRotation = {
+      x: 0.1,
+      y: Math.PI / 2
+    }; // Start rotated 90 degrees
     let cameraDistance = 300;
-    let cameraRotation = { x: 0, y: 0 };
 
-    // Camera transition logic removed
+    // Camera transition
+    let targetCameraY = Math.PI / 2;
+    let isTransitioning = false;
     const animationSettings = {
       speed: 1.0,
       interactionRadius: 180,
@@ -40,6 +55,15 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
     };
     let shootingStarTimer = 0;
     const shootingStarInterval = 8000;
+
+    // Handle section state changes
+    if (isActive) {
+      targetCameraY = Math.PI / 2; // Face the nebula
+      isTransitioning = true;
+    } else {
+      targetCameraY = 0; // Face away
+      isTransitioning = true;
+    }
 
     function init() {
       scene = new THREE.Scene();
@@ -422,7 +446,7 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
         scene.clear();
       }
     };
-  }, []);
+  }, [isActive]);
 
   const projects = [{
     id: 1,
@@ -451,18 +475,17 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
   }];
 
   return (
-    <section className="relative py-24 flex items-center justify-center overflow-hidden">
+    <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
       <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{
         background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
       }} />
       
-      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center px-12 lg:px-16">
+      <div className="relative z-10 w-full h-full flex flex-col justify-center pt-32 px-12 lg:px-16">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
           transition={{ duration: 0.8 }} 
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6 font-space">
             Featured Projects
@@ -475,9 +498,8 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+              transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
               whileHover={{ scale: 1.02 }}
               className="group cursor-pointer"
             >
@@ -518,10 +540,9 @@ const ProjectsSection = ({}: ProjectsSectionProps) => {
 
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }} 
           transition={{ duration: 0.8, delay: 0.6 }} 
-          className="text-center mt-16"
+          className="text-center mt-16 mb-16"
         >
           <button className="px-4 py-2 border border-purple-500/50 text-purple-400 rounded-full hover:bg-purple-500/20 hover:text-white transition-all duration-300 transform hover:scale-105 backdrop-blur-sm">
             View All Projects

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
@@ -12,13 +13,23 @@ interface NavigationProps {
 }
 
 const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    onNavigate.navigateToAbout && { name: 'About', action: onNavigate.navigateToAbout, isActive: currentSection === 'about' }
-  ].filter(Boolean) as { name: string; action: () => void; isActive: boolean }[];
+    { name: 'About', action: onNavigate.navigateToAbout || (() => {}), isActive: currentSection === 'about' }
+  ];
 
   const handleResumeClick = () => {
     // Open resume in new window/tab - user can replace with actual resume URL
@@ -30,7 +41,11 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-slate-900/90 backdrop-blur-lg border-b border-slate-800' 
+          : 'bg-transparent'
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center py-4 relative">
@@ -39,7 +54,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
             {navItems.map((item) => (
               <motion.button
                 key={item.name}
-                onClick={item.action}
+                onClick={item.action || (() => {})}
                 whileHover={{ y: -2 }}
                 className={`transition-colors duration-300 relative group ${
                   item.isActive ? 'text-white' : 'text-slate-300 hover:text-white'
@@ -98,7 +113,7 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
               <button
                 key={item.name}
                 onClick={() => {
-                  item.action();
+                  if (item.action) item.action();
                   setIsMobileMenuOpen(false);
                 }}
                 className={`block py-2 transition-colors duration-300 text-center w-full ${

@@ -16,7 +16,7 @@ const About = () => {
   };
 
   const handleNavigateToAbout = () => {
-    window.scrollTo(0, 0);
+    navigate('/about');
   };
 
   return (
@@ -29,9 +29,7 @@ const About = () => {
           navigateToAbout: handleNavigateToAbout
         }} 
       />
-      <div className="pt-24 pb-12">
-        <AboutSection isActive={true} />
-      </div>
+      <AboutSection isActive={true} />
     </div>
   );
 };

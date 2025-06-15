@@ -31,7 +31,7 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section id="process" className="w-full h-full flex flex-col items-center justify-center">
+    <section id="process" className="py-20 bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

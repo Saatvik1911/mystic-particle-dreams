@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import AboutBackground from './AboutBackground';
@@ -13,7 +12,7 @@ const AboutSection = ({ isActive = true }: AboutSectionProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: isActive ? 1 : 0 }}
       transition={{ duration: 0.8 }}
-      className="bg-black relative overflow-hidden"
+      className="min-h-screen py-20 bg-black relative overflow-hidden"
     >
       {/* 3D Background Animation */}
       <AboutBackground isActive={isActive} />
