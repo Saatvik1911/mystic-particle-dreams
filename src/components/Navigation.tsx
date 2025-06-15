@@ -1,14 +1,12 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 interface NavigationProps {
-  currentSection: 'hero' | 'projects' | 'process' | 'about';
+  currentSection: 'hero' | 'projects' | 'about';
   onNavigate: {
     navigateToHome: () => void;
     navigateToProjects: () => void;
-    navigateToProcess?: () => void;
     navigateToAbout?: () => void;
   };
 }
@@ -19,10 +17,8 @@ const Navigation = ({ currentSection, onNavigate }: NavigationProps) => {
   const navItems = [
     { name: 'Home', action: onNavigate.navigateToHome, isActive: currentSection === 'hero' },
     { name: 'Work', action: onNavigate.navigateToProjects, isActive: currentSection === 'projects' },
-    onNavigate.navigateToProcess && { name: 'Process', action: onNavigate.navigateToProcess, isActive: currentSection === 'process' },
     onNavigate.navigateToAbout && { name: 'About', action: onNavigate.navigateToAbout, isActive: currentSection === 'about' }
   ].filter(Boolean) as { name: string; action: () => void; isActive: boolean }[];
-
 
   const handleResumeClick = () => {
     // Open resume in new window/tab - user can replace with actual resume URL

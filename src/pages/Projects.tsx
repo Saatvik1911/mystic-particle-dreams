@@ -15,10 +15,6 @@ const Projects = () => {
     window.scrollTo(0, 0);
   };
 
-  const handleNavigateToProcess = () => {
-    navigate('/?section=process');
-  };
-
   const handleNavigateToAbout = () => {
     navigate('/about');
   };
@@ -30,7 +26,6 @@ const Projects = () => {
         onNavigate={{ 
           navigateToHome: handleNavigateToHome, 
           navigateToProjects: handleNavigateToProjects,
-          navigateToProcess: handleNavigateToProcess,
           navigateToAbout: handleNavigateToAbout
         }} 
       />

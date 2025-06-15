@@ -1,20 +1,19 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import HeroSection from '../components/HeroSection';
 import ProjectsSection from '../components/ProjectsSection';
-import ProcessSection from '../components/ProcessSection';
 import Footer from '../components/Footer';
 
 const Index = () => {
-  const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'process' | 'about'>('hero');
+  const [currentSection, setCurrentSection] = useState<'hero' | 'projects' | 'about'>('hero');
   const navigate = useNavigate();
   const location = useLocation();
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const Index = () => {
     let targetRef: React.RefObject<HTMLDivElement> | null = null;
     if (section === 'hero') targetRef = heroRef;
     if (section === 'projects') targetRef = projectsRef;
-    if (section === 'process') targetRef = processRef;
 
     if (targetRef) {
       setTimeout(() => scrollToSection(targetRef!), 100);
@@ -36,7 +34,6 @@ const Index = () => {
     const sections = [
       { id: 'hero', ref: heroRef },
       { id: 'projects', ref: projectsRef },
-      { id: 'process', ref: processRef },
     ];
     
     const container = scrollContainerRef.current;
@@ -88,7 +85,6 @@ const Index = () => {
         onNavigate={{ 
           navigateToHome: () => scrollToSection(heroRef), 
           navigateToProjects: () => scrollToSection(projectsRef),
-          navigateToProcess: () => scrollToSection(processRef),
           navigateToAbout
         }} 
       />
@@ -103,9 +99,6 @@ const Index = () => {
         </div>
         <div id="projects" ref={projectsRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
           <ProjectsSection />
-        </div>
-        <div id="process" ref={processRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center bg-slate-900">
-          <ProcessSection />
         </div>
         <div id="footer" ref={footerRef} className="w-screen h-full flex-shrink-0 snap-start flex items-center justify-center">
           <Footer />
