@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
+
 interface ProjectsSectionProps {
   isActive: boolean;
   onNavigateToHome: () => void;
 }
+
 const ProjectsSection = ({
   isActive,
   onNavigateToHome
@@ -15,8 +17,10 @@ const ProjectsSection = ({
   useEffect(() => {
     console.log('ProjectsSection isActive changed:', isActive);
   }, [isActive]);
+
   useEffect(() => {
     if (!canvasRef.current) return;
+
     let scene: THREE.Scene, camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer;
     let mainParticles: THREE.Points, starfield: THREE.Points, flowParticles: THREE.Points;
     let initialPositions: Float32Array, flowPositions: Float32Array;
@@ -59,6 +63,7 @@ const ProjectsSection = ({
       targetCameraY = 0; // Face away
       isTransitioning = true;
     }
+
     function init() {
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
@@ -77,6 +82,7 @@ const ProjectsSection = ({
       setupEventListeners();
       animate();
     }
+
     function createStarfield() {
       const starGeometry = new THREE.BufferGeometry();
       const starPositions = [];
@@ -104,6 +110,7 @@ const ProjectsSection = ({
       starfield = new THREE.Points(starGeometry, starMaterial);
       scene.add(starfield);
     }
+
     function createShootingStar() {
       const geometry = new THREE.BufferGeometry();
       const positions = [];
@@ -136,6 +143,7 @@ const ProjectsSection = ({
       scene.add(shootingStar);
       shootingStars.push(shootingStar);
     }
+
     function updateShootingStars(deltaTime: number) {
       shootingStars.forEach((star, index) => {
         star.userData.age += deltaTime;
@@ -151,6 +159,7 @@ const ProjectsSection = ({
         star.material.opacity = 1 - lifeRatio;
       });
     }
+
     function createFlowParticles() {
       const flowGeometry = new THREE.BufferGeometry();
       const positions = [];
@@ -180,6 +189,7 @@ const ProjectsSection = ({
       flowParticles = new THREE.Points(flowGeometry, flowMaterial);
       scene.add(flowParticles);
     }
+
     function createNebulaSystem() {
       if (mainParticles) {
         scene.remove(mainParticles);
@@ -277,6 +287,7 @@ const ProjectsSection = ({
       mainParticles = new THREE.Points(geometry, material);
       scene.add(mainParticles);
     }
+
     function updateCameraPosition() {
       const x = cameraDistance * Math.sin(cameraRotation.x) * Math.cos(cameraRotation.y);
       const y = cameraDistance * Math.cos(cameraRotation.x);
@@ -284,6 +295,7 @@ const ProjectsSection = ({
       camera.position.set(x, y, z);
       camera.lookAt(0, 0, 0);
     }
+
     function animate() {
       requestAnimationFrame(animate);
       const deltaTime = 16;
@@ -335,7 +347,7 @@ const ProjectsSection = ({
       // Animate flow particles
       if (flowParticles) {
         const positions = flowParticles.geometry.attributes.position.array as Float32Array;
-        const colors = flowParticles.geometry.attributes.color.array as Float32BufferAttribute;
+        const colors = flowParticles.geometry.attributes.color.array as Float32Array;
         for (let i = 0; i < positions.length; i += 3) {
           const originalX = flowPositions[i];
           const originalY = flowPositions[i + 1];
@@ -364,6 +376,7 @@ const ProjectsSection = ({
       }
       renderer.render(scene, camera);
     }
+
     function setupEventListeners() {
       function onMouseMove(event: MouseEvent) {
         const vec = new THREE.Vector3(event.clientX / window.innerWidth * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
@@ -422,6 +435,7 @@ const ProjectsSection = ({
         window.removeEventListener('resize', onWindowResize);
       };
     }
+
     init();
     return () => {
       if (renderer) {
@@ -432,6 +446,7 @@ const ProjectsSection = ({
       }
     };
   }, [isActive]);
+
   const projects = [{
     id: 1,
     title: "E-commerce Mobile App",
@@ -457,6 +472,7 @@ const ProjectsSection = ({
     tags: ["Healthcare", "Accessibility", "Web App"],
     color: "from-green-500 to-teal-500"
   }];
+
   return (
     <section className={`absolute inset-0 flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
       <canvas ref={canvasRef} className="absolute inset-0 z-0" style={{
@@ -547,4 +563,5 @@ const ProjectsSection = ({
     </section>
   );
 };
+
 export default ProjectsSection;
