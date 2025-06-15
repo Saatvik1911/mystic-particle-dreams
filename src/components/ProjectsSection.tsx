@@ -493,7 +493,7 @@ const ProjectsSection = ({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -501,11 +501,11 @@ const ProjectsSection = ({
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.8, delay: isActive ? index * 0.2 : 0 }}
               whileHover={{ scale: 1.02 }}
-              className="group cursor-pointer max-w-xs mx-auto"
+              className="group cursor-pointer mx-auto"
             >
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col w-80 h-96">
-                {/* Image section - fixed height for square-ish proportions */}
-                <div className="relative overflow-hidden h-48">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 w-80 h-96 flex flex-col">
+                {/* Image section - consistent height for all cards */}
+                <div className="relative overflow-hidden h-48 flex-shrink-0">
                   <img 
                     src={project.image} 
                     alt={project.title} 
