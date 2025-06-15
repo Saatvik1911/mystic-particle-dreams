@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
@@ -480,12 +479,12 @@ const ProjectsSection = ({
         background: 'linear-gradient(135deg, #000001 0%, #000003 50%, #000005 100%)'
       }} />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center pt-24">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-full flex flex-col justify-center pt-32">
         <motion.div 
           initial={{ opacity: 0, y: 30 }} 
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }} 
           transition={{ duration: 0.8 }} 
-          className="text-center mb-20"
+          className="text-center mb-24"
         >
           <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
             Selected Work
@@ -493,7 +492,7 @@ const ProjectsSection = ({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 max-w-4xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -505,7 +504,7 @@ const ProjectsSection = ({
             >
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-slate-700/50 hover:border-slate-600/50 transition-all duration-300 h-full flex flex-col">
                 {/* Image section */}
-                <div className="relative overflow-hidden h-40">
+                <div className="relative overflow-hidden h-32">
                   <img 
                     src={project.image} 
                     alt={project.title} 
@@ -515,8 +514,8 @@ const ProjectsSection = ({
                 </div>
                 
                 {/* Content section */}
-                <div className="p-5 flex flex-col flex-grow">
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
+                <div className="p-4 flex flex-col flex-grow">
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-purple-400 text-xs font-medium mb-3">
