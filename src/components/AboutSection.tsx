@@ -1,10 +1,18 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const AboutSection = () => {
+interface AboutSectionProps {
+  isActive?: boolean;
+}
+
+const AboutSection = ({ isActive = true }: AboutSectionProps) => {
   return (
-    <section className="min-h-screen py-20 bg-black relative overflow-hidden">
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isActive ? 1 : 0 }}
+      transition={{ duration: 0.8 }}
+      className="min-h-screen py-20 bg-black relative overflow-hidden"
+    >
       {/* Space background effects */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-20 w-2 h-2 bg-white rounded-full animate-pulse"></div>
@@ -22,8 +30,8 @@ const AboutSection = () => {
       <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           className="text-center mb-16"
         >
           <h1 className="text-6xl md:text-7xl font-light text-white mb-6 tracking-tight">
@@ -36,8 +44,8 @@ const AboutSection = () => {
           {/* Main content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -30 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-2 space-y-8"
           >
             <div className="prose prose-lg text-slate-300 leading-relaxed space-y-6">
@@ -69,8 +77,8 @@ const AboutSection = () => {
             {/* Skills section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
               className="mt-12"
             >
               <h3 className="text-2xl font-semibold text-white mb-6">Core Skills</h3>
@@ -85,13 +93,16 @@ const AboutSection = () => {
                   "Data Analysis",
                   "Team Leadership",
                   "Stakeholder Management"
-                ].map((skill) => (
-                  <div
+                ].map((skill, index) => (
+                  <motion.div
                     key={skill}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.9 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
                     className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg p-4 text-center hover:bg-slate-700/50 transition-all duration-300"
                   >
                     <span className="text-slate-300 font-medium">{skill}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
@@ -99,21 +110,24 @@ const AboutSection = () => {
             {/* Tools section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
             >
               <h3 className="text-2xl font-semibold text-white mb-6">Tools & Technologies</h3>
               <div className="flex flex-wrap gap-3">
                 {[
                   "Figma", "Sketch", "Adobe XD", "Principle", "InVision", "Miro", 
                   "Notion", "Amplitude", "Mixpanel", "Hotjar", "Loom", "Slack"
-                ].map((tool) => (
-                  <span
+                ].map((tool, index) => (
+                  <motion.span
                     key={tool}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                    transition={{ duration: 0.5, delay: 1.2 + index * 0.05 }}
                     className="px-4 py-2 bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-slate-300 rounded-full border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300 hover:scale-105"
                   >
                     {tool}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </motion.div>
@@ -122,8 +136,8 @@ const AboutSection = () => {
           {/* Profile image and contact */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 30 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="space-y-8"
           >
             <div className="relative">
@@ -139,7 +153,12 @@ const AboutSection = () => {
             </div>
 
             {/* Quick facts */}
-            <div className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50"
+            >
               <h3 className="text-lg font-semibold text-white mb-4">Quick Facts</h3>
               <div className="space-y-3 text-slate-300">
                 <div className="flex justify-between">
@@ -159,10 +178,15 @@ const AboutSection = () => {
                   <span className="text-purple-400">SaaS, FinTech</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Contact CTA */}
-            <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.9 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="text-center"
+            >
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -170,11 +194,11 @@ const AboutSection = () => {
               >
                 Let's Work Together
               </motion.button>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

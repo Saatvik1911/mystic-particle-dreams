@@ -29,7 +29,7 @@ const About = () => {
           navigateToAbout: handleNavigateToAbout
         }} 
       />
-      <AboutSection />
+      <AboutSection isActive={true} />
     </div>
   );
 };
