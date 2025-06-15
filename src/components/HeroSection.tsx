@@ -489,12 +489,13 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
           </p>
         </motion.div>
 
-        {/* Button now inside the same container as the text for proper alignment */}
+        {/* Button moved 50 points below by changing top positioning */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
           transition={{ duration: 0.8, delay: 1 }}
           className="pointer-events-auto"
+          style={{ marginTop: '50px' }}
         >
           <button 
             className="px-8 py-3 bg-white text-black rounded-full hover:bg-slate-100 transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium font-space"
@@ -522,4 +523,3 @@ const HeroSection = ({ isActive, onNavigateToProjects }: HeroSectionProps) => {
 };
 
 export default HeroSection;
-
